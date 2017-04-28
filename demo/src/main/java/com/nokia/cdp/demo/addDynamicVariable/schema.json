@@ -1,0 +1,8 @@
+{
+	"resetOnCopy":false,
+	"dontCopy":true,
+	"encrypt":false,
+	"name":"TestDyn",
+	"value":"1",
+	"resetValue":"1"
+}

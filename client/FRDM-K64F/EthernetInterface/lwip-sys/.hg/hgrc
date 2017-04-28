@@ -1,0 +1,4 @@
+[ui]
+ignore.local = .hg/hgignore
+[paths]
+default = http://mbed.org/users/mbed_official/code/lwip-sys/

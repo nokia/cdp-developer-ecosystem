@@ -1,0 +1,26 @@
+#give your router configuration ssid name
+SSID=
+#give your router configuration password
+PASSWORD=
+#If YES please ensure correct MASK,DNSSERVER&GATEWAY are valid
+STATIC=NO
+#This field gives static IP address
+STATICIP=192.168.178.68
+#This field gives DNS address
+DNSSERVER=192.168.178.1
+#This field gives Gateway address
+GATEWAY=192.168.178.1
+#This field gives IP address MASK
+MASK=255.255.255.0
+#This field gives COAP addresss
+LWM2MDEFSRV=
+#This field gives LwM2M End point address Name, limited to 20 characters (Serval limit)
+LWM2MENDPOINT=
+#This field gives configuration file the attribute value for ACTIVATEDTLS is ON
+ACTIVATEDTLSPSK = NO
+#This field gives DTLS/PSK identity of the configuration file
+DTLSPSKIDENTITY = XDK110_0
+#This field gives DTLS/PSK secret key of the configuration file (ex: Leshan has a key convert into Hex)
+DTLSPSKSECRETKEY = Leshan
+# This Field used to Enable the Buttons & LEDS States
+TESTMODE = YES
