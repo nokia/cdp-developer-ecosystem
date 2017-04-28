@@ -1,3 +1,16 @@
+/* Nokia Connected Device Platform NBI API Demos
+ * 
+ * POST: /rest/device/{id}/job
+ * 
+ * Description: This URI will allow you to queue a job to the device specified by ID. You may either
+ * queue a pre-existing action to the device, or specify a primitive request within this REST call.
+ * 
+ * 201 - OK/Created - Successfully queued job to the device
+ * 500 - Internal Server Error - Malformed JSON payload, device not found, Device not connected
+ * 
+ * @author Oliver Upton
+ * 
+ */
 package com.nokia.cdp.demo.queueJob;
 
 import java.io.File;
@@ -42,9 +55,11 @@ public static void main(String[] args) {
 		System.out.println("Password: ");
 		String pw = s.nextLine();
 		
-		// Then, we will build the URL based on the input and create a new GET method
+		// Then, we will build the URL based on the input and create a new POST method
 		HttpPost addJob = new HttpPost("http://" + ipAddr + ":" + port + "/rest/device/" + id + "/job");
 		addJob.setHeader("Content-Type", "application/json");
+		
+		// Read the JSON Schema from the classpath
 		URL url = QueueJob.class.getResource("schema.json");
 		try {
 			addJob.setEntity(new ByteArrayEntity(FileUtils.readFileToByteArray(new File(url.getPath()))));
@@ -59,7 +74,7 @@ public static void main(String[] args) {
 		CredentialsProvider prov = new BasicCredentialsProvider();
 		prov.setCredentials(AuthScope.ANY, creds);
 				
-		// Build the HttpClient that will tender our HTTP GET method
+		// Build the HttpClient that will tender our HTTP POST method
 		HttpClient client = HttpClientBuilder.create().setDefaultCredentialsProvider(prov).build();
 		HttpResponse list = null;
 		try {

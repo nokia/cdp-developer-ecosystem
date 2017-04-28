@@ -47,7 +47,7 @@ public class GetDevices {
 		// Then, we will build the URL based on the input and create a new GET method
 		HttpGet getDevices = new HttpGet("http://" + ipAddr + ":" + port + "/rest/device?iDisplayLength=10&iDisplayStart=0");
 		
-		// Confiugure the Credentials
+		// Configure the Credentials
 		Credentials creds = new UsernamePasswordCredentials(uname, pw);
 		CredentialsProvider prov = new BasicCredentialsProvider();
 		prov.setCredentials(AuthScope.ANY, creds);

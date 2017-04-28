@@ -1,3 +1,17 @@
+/* Nokia Connected Device Platform NBI API Demos
+ * 
+ * POST: /rest/device/{id}/dynamicvariable
+ * 
+ * Description: This URI will allow you to add a dynamic variable to the device specified by ID.
+ * The response body from this API will be empty with a successful POST, however the response codes
+ * correspond to the following errors
+ * 
+ * 201 - OK/Created - Successfully added DynamicVariable to the specified device
+ * 500 - Internal Server Error - Malformed JSON payload, device not found, etc.
+ * 
+ * @author Oliver Upton
+ * 
+ */
 package com.nokia.cdp.demo.addDynamicVariable;
 
 import java.io.File;
@@ -24,9 +38,7 @@ import com.nokia.cdp.demo.addServiceTag.AddServiceTag;
 
 public class AddDynamicVariable {
 	public static void main(String[] args) {
-		
-		//TODO: Implement POST JSON Schema
-		
+				
 		// First, we will allow the user to provide CDP server parameters
 		System.out.println("Please provide the CDP IP address: ");
 		Scanner s = new Scanner(System.in);
@@ -40,9 +52,11 @@ public class AddDynamicVariable {
 		System.out.println("Password: ");
 		String pw = s.nextLine();
 		
-		// Then, we will build the URL based on the input and create a new GET method
+		// Then, we will build the URL based on the input and create a new POST method
 		HttpPost addTag = new HttpPost("http://" + ipAddr + ":" + port + "/rest/device/" + id + "/dynamicvariable");
 		addTag.setHeader("Content-Type", "application/json");
+		
+		// Read the JSON Schema from the classpath
 		URL url = AddDynamicVariable.class.getResource("schema.json");
 		try {
 			addTag.setEntity(new ByteArrayEntity(FileUtils.readFileToByteArray(new File(url.getPath()))));

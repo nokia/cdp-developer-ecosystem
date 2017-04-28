@@ -1,3 +1,17 @@
+/* Nokia Connected Device Platform NBI API Demos
+ * 
+ * POST: /rest/device/{id}/servicetag
+ * 
+ * Description: This URI will allow you to add a service tag to the device specified by ID.
+ * The response body from this API will be empty with a successful POST, however the response codes
+ * correspond to the following errors
+ * 
+ * 201 - OK/Created - Successfully added ServiceTag to the specified device
+ * 500 - Internal Server Error - Malformed JSON payload, device not found, etc.
+ * 
+ * @author Oliver Upton
+ * 
+ */
 package com.nokia.cdp.demo.addServiceTag;
 
 import java.io.File;
@@ -25,8 +39,6 @@ import com.nokia.cdp.demo.addDevice.AddDevice;
 public class AddServiceTag {
 public static void main(String[] args) {
 		
-		//TODO: Implement POST JSON Schema
-		
 		// First, we will allow the user to provide CDP server parameters
 		System.out.println("Please provide the CDP IP address: ");
 		Scanner s = new Scanner(System.in);
@@ -43,6 +55,8 @@ public static void main(String[] args) {
 		// Then, we will build the URL based on the input and create a new GET method
 		HttpPost addTag = new HttpPost("http://" + ipAddr + ":" + port + "/rest/device/" + id + "/servicetag");
 		addTag.setHeader("Content-Type", "application/json");
+		
+		// Read the JSON Schema from the classpath
 		URL url = AddServiceTag.class.getResource("schema.json");
 		try {
 			addTag.setEntity(new ByteArrayEntity(FileUtils.readFileToByteArray(new File(url.getPath()))));
@@ -57,12 +71,12 @@ public static void main(String[] args) {
 		CredentialsProvider prov = new BasicCredentialsProvider();
 		prov.setCredentials(AuthScope.ANY, creds);
 				
-		// Build the HttpClient that will tender our HTTP GET method
+		// Build the HttpClient that will tender our HTTP POST method
 		HttpClient client = HttpClientBuilder.create().setDefaultCredentialsProvider(prov).build();
 		HttpResponse list = null;
 		try {
 					
-			// Execute the GET method
+			// Execute the POST method
 			list = client.execute(addTag);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();

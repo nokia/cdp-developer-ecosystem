@@ -1,3 +1,16 @@
+/* Nokia Connected Device Platform NBI API Demos
+ * 
+ * POST: /rest/device
+ * 
+ * Description: This URI will allow you to create a new device in the CDP console. The API returns 
+ * no response body, and the status codes correspond to the following values:
+ * 
+ * 201 - OK/Created - Successfully added the specified device
+ * 500 - Internal Server Error - Malformed JSON payload
+ * 
+ * @author Oliver Upton
+ * 
+ */
 package com.nokia.cdp.demo.addDevice;
 
 import java.io.File;
@@ -37,7 +50,7 @@ public class AddDevice {
 		System.out.println("Password: ");
 		String pw = s.nextLine();
 		
-		// Then, we will build the URL based on the input and create a new GET method
+		// Then, we will build the URL based on the input and create a new POST method
 		HttpPost addDevice = new HttpPost("http://" + ipAddr + ":" + port + "/rest/device");
 		addDevice.setHeader("Content-Type", "application/json");
 		URL url = AddDevice.class.getResource("jsonSchema.json");
@@ -54,12 +67,12 @@ public class AddDevice {
 		CredentialsProvider prov = new BasicCredentialsProvider();
 		prov.setCredentials(AuthScope.ANY, creds);
 				
-		// Build the HttpClient that will tender our HTTP GET method
+		// Build the HttpClient that will tender our HTTP POST method
 		HttpClient client = HttpClientBuilder.create().setDefaultCredentialsProvider(prov).build();
 		HttpResponse list = null;
 		try {
 					
-			// Execute the GET method
+			// Execute the POST method
 			list = client.execute(addDevice);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
