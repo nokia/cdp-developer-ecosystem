@@ -6,5 +6,5 @@ To access the REST API documentation from CDP, navigate to "http://your.cdp.serv
 
 ### 2. From local machine
 
-1. Clone this GitHub repo to your local machine
-2. Navigate to "cdp-developer-ecosystem/docs/rest/swagger-docs/" and open "index.html" in your web browser
+- Clone this GitHub repo to your local machine
+- Navigate to "cdp-developer-ecosystem/docs/rest/swagger-docs/" and open "index.html" in your web browser
