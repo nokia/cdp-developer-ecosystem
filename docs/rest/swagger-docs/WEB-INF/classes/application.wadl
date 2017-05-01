@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02"><doc
+        jersey:generatedBy="Jersey: 1.19 02/11/2015 03:25 AM"
+        xmlns:jersey="http://jersey.java.net/"/><doc
+        title="A message in the WADL"
+            xml:lang="en"><![CDATA[This is added to the start of the generated application.wadl]]></doc><grammars><include
+        href="xsd0.xsd"><doc/></include></grammars><resources
+            base="http://example.com:8080/rest"><resource
+                path="/tenant"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><ns2:representation
+                        element="page" mediaType="application/json"
+                        xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/eis"><method id="getEISInfo"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><resource
+                    path="{eid}/operation/history"><param name="eid"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="queryHistory"
+                            name="GET"><response><ns2:representation
+                            element="page" mediaType="application/json"
+                            xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method></resource><resource
+                    path="{eid}/operation/queue/{id}"><param name="eid"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><param
+                    name="id" style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="queryQueue" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="{eid}/operation/queue"><param name="eid"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="queryQueue" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="queueAsyncOperation"
+                            name="POST"><request><representation
+                            mediaType="application/json"/></request><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/about"><method id="getInformationAboutProduct"
+                        name="GET"><response><representation
+            mediaType="application/json"/></response></method></resource><resource
+                path="/application"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="multipart/form-data"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><ns2:representation
+                        element="page" mediaType="application/json"
+                        xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="multipart/form-data"/></request><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/brand"><method id="getMakes"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><resource
+                    path="{name}"><param name="name" style="template"
+                    type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getModels" name="GET"><response><representation
+            mediaType="application/json"/></response></method></resource></resource><resource
+                path="/firmware"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="multipart/form-data"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><ns2:representation
+                        element="page" mediaType="application/json"
+                        xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="multipart/form-data"/></request><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="upc"><method id="importUPCFromURL"
+                            name="POST"><request><representation
+                            mediaType="text/plain"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="importUPCFile"
+                            name="POST"><request><representation
+                            mediaType="multipart/form-data"/></request><response><representation
+                    mediaType="*/*"/></response></method><resource
+                        path="binaryFile/{imageName}"><param
+                        name="imageName" style="template"
+                        type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                        id="importFirmwareBinaryFile"
+                                name="PUT"><request><representation
+                                mediaType="multipart/form-data"/></request><response><representation
+                    mediaType="*/*"/></response></method></resource><resource
+                        path="binaryURL/{imageName}"><param
+                        name="imageName" style="template"
+                        type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                        id="importFirmwareBinaryFromURL"
+                                name="PUT"><request><representation
+                                mediaType="application/json"/></request><response><representation
+            mediaType="*/*"/></response></method></resource></resource></resource><resource
+                path="/user"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><ns2:representation
+                        element="page" mediaType="application/json"
+                        xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method><resource
+                    path="tenant"><method id="getTenantOfUser"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/role"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><ns2:representation
+                        element="page" mediaType="application/json"
+                        xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/profile"><method id="listProfiles"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><resource
+                    path="{iccid}"><param name="iccid" style="template"
+                    type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="deleteEIS"
+                            name="DELETE"><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="getProfile" name="GET"><response><representation
+            mediaType="application/json"/></response></method></resource></resource><resource
+                path="/"><method id="gotToDocumentation"
+                        name="GET"><response><representation
+            mediaType="*/*"/></response></method></resource><resource
+                path="/sce"><method id="getAllMetasAndValue"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><resource
+                    path="string/{key}"><param name="key"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getString" name="GET"><response><representation
+                    mediaType="text/plain"/></response></method><method
+                    id="changeStringValue"
+                            name="PUT"><request><representation
+                            mediaType="text/plain"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="clearString"
+                            name="DELETE"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="string/{key}/details"><param name="key"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getAllDetailsForNode"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="file/{key}"><param name="key" style="template"
+                    type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="uploadFile" name="PUT"><request><representation
+                            mediaType="multipart/form-data"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="clearFile"
+                            name="DELETE"><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="getFile" name="GET"><request><param
+                            name="Accept" style="header"
+                            type="xs:string"
+                            xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                            mediaType="application/octet-stream"/><representation
+                mediaType="text/css"/></response></method></resource><resource
+                    path="string/{key}/value"><param name="key"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getStringValue"
+                            name="GET"><response><representation
+            mediaType="text/plain"/></response></method></resource></resource><resource
+                path="/dashboard"><method id="getDashboard"
+                        name="GET"><response><representation
+            mediaType="application/json"/></response></method></resource><resource
+                path="/faultmanagement"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><ns2:representation
+                        element="page" mediaType="application/json"
+                        xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method><resource
+                    path="{id}/enable"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="enablePolicy"
+                            name="PUT"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="{id}/disable"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="disablePolicy"
+                            name="PUT"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="{id}/condition"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="fetchFaultCondition"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/device"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><ns2:representation
+                        element="page" mediaType="application/json"
+                        xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method><resource
+                    path="bootstrap/{id}"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="bootstrapDevice"
+                            name="POST"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}/primitive"><param name="id"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getPrimitivesSupportedByDeviceEntity"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}/primitive/{name}"><param name="name"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><param
+                    name="id" style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getPrimitiveSupportedByDeviceEntity"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}/customattribute"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="updateCustomAttributes"
+                            name="PUT"><request><representation
+                            mediaType="*/*"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="getCustomAttributes"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="customer/{name}"><param name="name"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getAllDevicesForCustomer"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="subscriber/{name}"><param name="name"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getAllDevicesForSubscriber"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}/attacheddevice"><param name="id"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getDevices"
+                            name="GET"><response><ns2:representation
+                            element="page" mediaType="application/json"
+                            xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method></resource><resource
+                    path="{id}/fault"><param name="id" style="template"
+                    type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getDeviceFaultsByDevice"
+                            name="GET"><response><ns2:representation
+                            element="page" mediaType="application/json"
+                            xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method></resource><resource
+                    path="fault/{id}/cease"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="ceaseFaultCondition"
+                            name="DELETE"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="compatibleplc"><method id="getAvailablePlc"
+                            name="GET"><request><param name="make"
+                            style="query" type="xs:string"
+                            xmlns:xs="http://www.w3.org/2001/XMLSchema"/><param
+                            name="model" style="query" type="xs:string"
+                            xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}/compatibleplc"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getCompatiblePlcClients"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}/log"><param name="id" style="template"
+                    type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getDeviceLog"
+                            name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="deleteDeviceLog"
+                            name="DELETE"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="criteria/{id}/count"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="countDevicesBySelectionCriteria"
+                            name="POST"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="criteria/{id}"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="queryDevicesWithSelectionCriteria"
+                            name="POST"><request><representation
+                            mediaType="application/json"/></request><response><ns2:representation
+                            element="bigpage"
+                            mediaType="application/json"
+                            xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                xmlns=""/></response></method></resource><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="{deviceid}/servicetag"><method id="create"
+                            name="POST"><request><representation
+                            mediaType="*/*"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="query" name="GET"><response><ns2:representation
+                            element="page" mediaType="application/json"
+                            xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                    xmlns=""/></response></method><resource
+                        path="{name}"><param name="name"
+                        style="template" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                        id="update" name="PUT"><request><representation
+                                mediaType="*/*"/></request><response><representation
+                        mediaType="*/*"/></response></method><method
+                        id="delete"
+                                name="DELETE"><response><representation
+                    mediaType="*/*"/></response></method></resource><resource
+                        path="name"><method id="query"
+                                name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource></resource><resource
+                    path="{deviceid}/action"><method
+                    id="findAllActionsCompatibleForDevice"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{deviceid}/job"><method
+                    id="queueSingleDeviceJob"
+                            name="POST"><request><representation
+                            mediaType="*/*"/></request><response><representation
+                    mediaType="*/*"/></response></method><resource
+                        path="queue"><method id="queryQueuedJob"
+                                name="GET"><response><representation
+                    mediaType="application/json"/></response></method></resource><resource
+                        path="history"><method id="queryDeviceHistory"
+                                name="GET"><response><ns2:representation
+                                element="page"
+                                mediaType="application/json"
+                                xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                    xmlns=""/></response></method></resource><resource
+                        path="history/retry"><method
+                        id="queryDeviceJobRetryHistory"
+                                name="GET"><response><ns2:representation
+                                element="page"
+                                mediaType="application/json"
+                                xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                    xmlns=""/></response></method></resource><resource
+                        path="{jobCorrelatorId}"><param
+                        name="jobCorrelatorId" style="template"
+                        type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                        id="queryJobDetails"
+                                name="GET"><response><representation
+                        mediaType="application/json"/></response></method><method
+                        id="cancelJob"
+                                name="DELETE"><response><representation
+                    mediaType="*/*"/></response></method></resource><resource
+                        path="history/retry/{djrlId}"><param
+                        name="djrlId" style="template" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                        id="queryRetryJobDetails"
+                                name="GET"><response><representation
+                    mediaType="application/json"/></response></method></resource><resource
+                        path="history/download"><method
+                        id="downloadRetryHistoryFile"
+                                name="GET"><response><representation
+                mediaType="text/csv"/></response></method></resource></resource><resource
+                    path="{deviceid}/usertag"><method id="create"
+                            name="POST"><request><representation
+                            mediaType="*/*"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="query" name="GET"><response><ns2:representation
+                            element="page" mediaType="application/json"
+                            xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                    xmlns=""/></response></method><resource
+                        path="{name}"><param name="name"
+                        style="template" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                        id="update" name="PUT"><request><representation
+                                mediaType="*/*"/></request><response><representation
+                        mediaType="*/*"/></response></method><method
+                        id="delete"
+                                name="DELETE"><response><representation
+                mediaType="*/*"/></response></method></resource></resource><resource
+                    path="{deviceid}/dynamicvariable"><method
+                    id="create" name="POST"><request><representation
+                            mediaType="*/*"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="query" name="GET"><response><ns2:representation
+                            element="page" mediaType="application/json"
+                            xmlns:ns2="http://wadl.dev.java.net/2009/02"
+                    xmlns=""/></response></method><resource
+                        path="{name}"><param name="name"
+                        style="template" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                        id="remove"
+                                name="DELETE"><response><representation
+                        mediaType="*/*"/></response></method><method
+                        id="update" name="PUT"><request><representation
+                                mediaType="*/*"/></request><response><representation
+                mediaType="*/*"/></response></method></resource></resource><resource
+                    path="{deviceid}/application"><method
+                    id="queryApplications"
+                            name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="queueApplicationCommand"
+                            name="POST"><request><representation
+                            mediaType="*/*"/></request><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/selectioncriteria"><method
+                id="getAllSelectionCriteria"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><method
+                id="importSelectionCriteria"
+                        name="POST"><request><representation
+                        mediaType="multipart/form-data"/></request><response><representation
+                mediaType="*/*"/></response></method><method
+                id="deleteManyCriteriaByIds"
+                        name="DELETE"><request><representation
+                        mediaType="text/plain"/></request><response><representation
+                mediaType="*/*"/></response></method><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="deleteCriteriaById"
+                            name="DELETE"><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="getCriteriaById"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="export"><method id="getFile"
+                            name="GET"><response><representation
+                mediaType="text/xml"/></response></method></resource><resource
+                    path="{id}/param"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="query" name="GET"><response><ns2:representation
+                            element="page" mediaType="application/json"
+                            xmlns:ns2="http://wadl.dev.java.net/2009/02"
+            xmlns=""/></response></method></resource></resource><resource
+                path="/campaign"><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><resource
+                    path="{id}/window"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="windowLogs" name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}/statistic"><param name="id"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getStatistics"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="statistic"><method id="getStatistics"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}/statistic/previous"><param name="id"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getPreviousStatistics"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="schedule"><method id="getSchedule"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="/{id}/enable"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="enableJob" name="PUT"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="/{id}/disable"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="disableJob" name="PUT"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/policy"><method id="listEventTriggeredJobs"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><method
+                id="create" name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><resource
+                    path="/{id}/enable"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="enableJob" name="PUT"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="/{id}/disable"><param name="id"
+                    style="template" type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="disableJob" name="PUT"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="chain/{jobCorrelatorId}"><param
+                    name="jobCorrelatorId" style="template"
+                    type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="queryPolicyChainDetails"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{jobCorrelatorId}"><param
+                    name="jobCorrelatorId" style="template"
+                    type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="delete" name="DELETE"><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/script"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method
+                id="exportItems" name="GET"><response><representation
+                mediaType="application/vnd.motive.udm.script+xml"/></response></method><method
+                id="importItems" name="POST"><response><representation
+                mediaType="*/*"/></response></method><method
+                id="importScripts" name="POST"><request><representation
+                        mediaType="multipart/form-data"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="/export"><method id="getFile"
+                            name="GET"><response><representation
+            mediaType="text/xml"/></response></method></resource></resource><resource
+                path="/primitive"><method id="listPrimitives"
+                        name="GET"><request><param name="type"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="application/json"/></response></method><resource
+                    path="{name}"><param name="name" style="template"
+                    type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getPrimitiveMeta"
+                            name="GET"><response><representation
+            mediaType="application/json"/></response></method></resource></resource><resource
+                path="/me"><method id="get"
+                        name="GET"><response><representation
+            mediaType="application/json"/></response></method></resource><resource
+                path="/transport"><resource path="threadLocals"><method
+                    id="getThreadLocals"
+                            name="GET"><response><representation
+                mediaType="text/plain"/></response></method></resource><resource
+                    path="/email"><method id="changeEmail"
+                            name="PUT"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="/sms"><method id="changeSms"
+                            name="PUT"><response><representation
+            mediaType="application/json"/></response></method></resource></resource><resource
+                path="/permission"><method id="getPossiblePermissions"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getPermissionsOfRole"
+                            name="GET"><response><representation
+            mediaType="application/json"/></response></method></resource></resource><resource
+                path="/devicetype"><method id="update"
+                        name="PUT"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><method
+                id="deleteByName" name="DELETE"><request><param
+                        name="name" style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><resource
+                    path="{manufacturer}"><param name="manufacturer"
+                    style="template" type="xs:string"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getModels" name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="protocol"><method id="getProtocols"
+                            name="GET"><response><representation
+                mediaType="application/json"/></response></method></resource><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation
+            mediaType="*/*"/></response></method></resource></resource><resource
+                path="/action"><method id="deleteByName"
+                        name="DELETE"><request><param name="name"
+                        style="query" type="xs:string"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="create"
+                        name="POST"><request><representation
+                        mediaType="application/json"/></request><response><representation
+                mediaType="*/*"/></response></method><method id="query"
+                        name="GET"><response><representation
+                mediaType="application/json"/></response></method><resource
+                    path="{id}/xml"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="getActionInXMLFormat"
+                            name="GET"><response><representation
+                mediaType="text/plain"/></response></method></resource><resource
+                    path="export"><method id="exportActions"
+                            name="GET"><response><representation
+                mediaType="text/xml"/></response></method></resource><resource
+                    path="import"><method id="importActions"
+                            name="POST"><request><representation
+                            mediaType="multipart/form-data"/></request><response><representation
+                mediaType="*/*"/></response></method></resource><resource
+                    path="{id}"><param name="id" style="template"
+                    type="xs:long"
+                    xmlns:xs="http://www.w3.org/2001/XMLSchema"/><method
+                    id="get" name="GET"><response><representation
+                    mediaType="application/json"/></response></method><method
+                    id="update" name="PUT"><request><representation
+                            mediaType="application/json"/></request><response><representation
+                    mediaType="*/*"/></response></method><method
+                    id="delete" name="DELETE"><response><representation mediaType="*/*"/></response></method></resource></resource></resources></application>

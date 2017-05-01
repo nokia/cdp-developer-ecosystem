@@ -1,0 +1,8 @@
+<jboss-web version="7.2"
+           xmlns="http://www.jboss.com/xml/ns/javaee">
+    <valve>
+        <class-name>org.apache.catalina.authenticator.BasicAuthenticator</class-name>
+    </valve>
+    <security-domain>MDM</security-domain>
+
+</jboss-web>

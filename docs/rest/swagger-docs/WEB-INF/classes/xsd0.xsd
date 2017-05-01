@@ -1,0 +1,147 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="bigpage" type="bigPage"/>
+
+  <xs:element name="page" type="page"/>
+
+  <xs:element name="scriptDetail" type="scriptDetail"/>
+
+  <xs:element name="scripts" type="scriptDetailXmlWrapper"/>
+
+  <xs:complexType name="shortDeviceInfo">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:string" minOccurs="0"/>
+      <xs:element name="deviceId" type="xs:string" minOccurs="0"/>
+      <xs:element name="inUse" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="managed" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
+      <xs:element name="model" type="xs:string" minOccurs="0"/>
+      <xs:element name="networkId" type="xs:string" minOccurs="0"/>
+      <xs:element name="subscriberId" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="invocationModel">
+    <xs:sequence>
+      <xs:element name="endTime" type="xs:long" minOccurs="0"/>
+      <xs:element name="faultString" type="xs:string" minOccurs="0"/>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+      <xs:element name="input" type="xs:string" minOccurs="0"/>
+      <xs:element name="operation" type="xs:string" minOccurs="0"/>
+      <xs:element name="output" type="xs:string" minOccurs="0"/>
+      <xs:element name="queuedTime" type="xs:long" minOccurs="0"/>
+      <xs:element name="startTime" type="xs:long" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+      <xs:element name="subStatus" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bigPage">
+    <xs:sequence>
+      <xs:element name="iTotalDisplayRecords" type="xs:long" minOccurs="0"/>
+      <xs:element name="aaData" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="hasNext" type="xs:boolean"/>
+      <xs:element name="hasPrevious" type="xs:boolean"/>
+      <xs:element name="currentDisplayStart" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="scriptDetail">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="nativePrimitive" type="xs:string" minOccurs="0"/>
+      <xs:element name="schema" type="xs:string" minOccurs="0"/>
+      <xs:element name="content" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sceDetailMeta">
+    <xs:sequence>
+      <xs:element name="key" type="xs:string" minOccurs="0"/>
+      <xs:element name="value" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="primitive">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sceMeta">
+    <xs:sequence>
+      <xs:element name="checkbox" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="escaped" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="fileUpload" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="fileUploadPassword" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="key" type="xs:string" minOccurs="0"/>
+      <xs:element name="overridden" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="selectValues" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="sensitive" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="tenantSpecific" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="textArea" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="value" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="page">
+    <xs:sequence>
+      <xs:element name="iTotalRecords" type="xs:long" minOccurs="0"/>
+      <xs:element name="iTotalDisplayRecords" type="xs:long" minOccurs="0"/>
+      <xs:element name="sEcho" type="xs:string" minOccurs="0"/>
+      <xs:element name="aaData" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="criteriaList">
+    <xs:complexContent>
+      <xs:extension base="persistentObject">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="persistentObject">
+    <xs:sequence>
+      <xs:element name="createdOn" type="xs:long" minOccurs="0"/>
+      <xs:element name="id" type="xs:long" minOccurs="0"/>
+      <xs:element name="updatedOn" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="scriptDetailXmlWrapper">
+    <xs:complexContent>
+      <xs:extension base="arrayList">
+        <xs:sequence>
+          <xs:element ref="scriptDetail" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="arrayList">
+    <xs:complexContent>
+      <xs:extension base="abstractList">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="abstractList" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="abstractCollection">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="abstractCollection" abstract="true">
+    <xs:sequence/>
+  </xs:complexType>
+</xs:schema>
+

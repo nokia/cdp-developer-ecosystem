@@ -1,0 +1,5165 @@
+swagger: '2.0'
+info:
+  title: Nokia Motive Connected Device Platform API
+  description: CDP enables management of remote devices over various protocols. This API can be used to provision devices, get diagnostics from them and configure them.
+  version: 1.0.0
+basePath: /rest
+schemes:
+  - http
+  - https
+produces:
+  - application/json
+paths:
+  '/about':
+    get:
+      description: Returns information about version of the product, build date and IoT content date.
+      summary: Get information about product version, build date and IoT content date.
+      tags:
+        - About
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Gets the information about version and build date.
+          schema:
+            $ref: '#/definitions/About'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/permission':
+    get:
+      description: Get All Avaialable permissions as list
+      summary: Fetches all available permissions
+      tags:
+        - Permission
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Permissions returned succesfully
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/permission/{id}':
+    get:
+      description: Gets all permissions assigned to the role of specyfic ID
+      summary: Retrives all permissions of role with that ID
+      tags:
+        - Permission
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Permissions returned succesfully
+          schema:
+            $ref: '#/definitions/Role'
+        '404':
+          description: Resource not found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/role':
+    get:
+      description: Gets a full list of roles in the system
+      summary: Fetches all roles available in the system
+      tags:
+        - Role
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+      responses:
+        '200':
+          description: Roles returned succesfully
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new role
+      description: This endpoit creates a new role
+      parameters:
+        - name: role
+          in: body
+          description: Role
+          schema:
+            $ref: '#/definitions/Role'
+      tags:
+        - Role
+      responses:
+        '201':
+          description: Returns a generated unique id for this device
+          schema:
+            type: integer
+            format: int64
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes the role by name
+      parameters:
+        - name: name
+          type: string
+          in: query
+          required: true
+          description: Name of role for delete
+      tags:
+        - Role
+      responses:
+        '200':
+          description: Deletes the particular Role, based on the name.
+        '404':
+          description: Role for delete was not found
+        '500':
+          description: Internal server error. Action may be in use.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/role/{id}':
+    put:
+      summary: Updates the Role with new values
+      description: Updates the role with new values
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: role
+          in: body
+          description: Role
+          schema:
+            $ref: '#/definitions/Role'
+      tags:
+        - Role
+      responses:
+        '200':
+          description: Updated successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes the role from system based on its ID
+      description: Deleting the role by ID
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Role
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: Role deleted successfully
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      description: Get the Role
+      summary: Fetches the specific role
+      tags:
+        - Role
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Role returned succesfully
+          schema:
+            $ref: '#/definitions/Role'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/primitive':
+    get:
+      description: Get all existing primitives as list
+      summary: Get all primitives
+      tags:
+        - Primitive
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Primitives returned.
+          schema:
+            $ref: '#/definitions/Primitive'
+        '404':
+          description: Resource not found.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/primitive/{name}':
+    get:
+      description: Get the meta data of primitive
+      summary: Get meta data of primitive
+      tags:
+        - Primitive
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/name'
+      responses:
+        '200':
+          description: Primitives returned.
+          schema:
+            $ref: '#/definitions/Primitive'
+        '404':
+          description: Resource not found.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/me':
+    get:
+      description: Get data about current user
+      summary: Get details of the logged in user
+      tags:
+        - Profile
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Get roles etc from the logged in user.
+          schema:
+            $ref: '#/definitions/Me'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/dashboard':
+    get:
+      description: Get count of tenants, users, devices in the system. Cumulative data about device count per month, job statistics per month
+      summary: Get CDP dashboard information
+      tags:
+        - Dashboard
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Get count of tenants, users, devices in the system. Cumulative data about device count per month, job statistics per month
+          schema:
+            $ref: '#/definitions/Dashboard'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/sce/string/{key}':
+    delete:
+      summary: Clears the value of a string-based SCE property
+      description: When cleared, the value is reset to factory defaults
+      parameters:
+        - $ref: '#/parameters/keyParam'
+      tags:
+        - SCE
+      responses:
+        '204':
+          description: Reset successfully
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Changes the value of a string-based SCE property
+      parameters:
+        - $ref: '#/parameters/keyParam'
+        - name: body
+          in: body
+          schema:
+            type: string
+      tags:
+        - SCE
+      consumes:
+        - text/plain
+      responses:
+        '204':
+          description: update success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      summary: Returns the value of a string-based SCE property
+      parameters:
+        - $ref: '#/parameters/keyParam'
+      tags:
+        - SCE
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: Current value as string (text/plain)
+        '204':
+          description: No value exists, not even a default value
+        '405':
+          description: This SCE key can not be read since it contains sensitive data
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/sce/string/{key}/value':
+    get:
+      summary: Returns the value of properties in which conversion required
+      parameters:
+        - $ref: '#/parameters/keyParam'
+      tags:
+        - SCE
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: The converted value of the Key
+        '204':
+          description: No value exists for the key
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/sce/string/{key}/details':
+    get:
+      summary: Returns the details of a string-based SCE property
+      parameters:
+        - $ref: '#/parameters/keyParam'
+      tags:
+        - SCE
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An array of SCE metadata
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SceDetailMeta'
+        '204':
+          description: No value exists, not even a default value
+        '405':
+          description: This SCE key can not be read since it contains sensitive data
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/sce/file/{key}':
+    delete:
+      summary: Clears the value of a file-based SCE property
+      description: When cleared, the value is reset to factory defaults
+      parameters:
+        - $ref: '#/parameters/keyParam'
+      tags:
+        - SCE
+      responses:
+        '204':
+          description: Reset successfully
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Changes the value of a file-based SCE property through upload
+      tags:
+        - SCE
+      consumes:
+        - multipart/form-data
+      parameters:
+        - $ref: '#/parameters/keyParam'
+        - name: fileupload
+          in: formData
+          description: File
+          required: true
+          type: file
+        - name: password
+          in: formData
+          description: Optional password required to decrypt the file contents
+          required: false
+          type: string
+      responses:
+        '204':
+          description: update success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      summary: Download the value of a file-based SCE property
+      parameters:
+        - $ref: '#/parameters/keyParam'
+      tags:
+        - SCE
+      produces:
+        - application/octet-stream
+      responses:
+        '200':
+          description: Octet stream is returned
+          headers:
+            Content-Disposition:
+              type: string
+              description: Filename to use
+        '204':
+          description: No value exists, not even a default value
+        '405':
+          description: This SCE key can not be read since it contains sensitive data
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/sce':
+    get:
+      summary: Returns metadata for all available SCE properties.
+      description: The returned list contains both string-based and file-based SCE properties
+      tags:
+        - SCE
+      responses:
+        '200':
+          description: An array of SCE metadata
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SceMeta'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/brand':
+    get:
+      summary: Returns list of brands from device model repository
+      tags:
+        - DeviceModel
+      responses:
+        '200':
+          description: An array of device brand data
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DeviceBrand'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/brand/{name}':
+    get:
+      summary: Returns list of models for the specified brand
+      description: Returns a list of available models of specific device brand
+      parameters:
+        - $ref: '#/parameters/name'
+      tags:
+        - DeviceModel
+      responses:
+        '200':
+          description: An array of device models for the specified brand
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DeviceModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/policy':
+    get:
+      summary: list all policies
+      description: This api list all polices based on search criteria
+      parameters:
+       - name: policyName
+         in: query
+         description: Policy Name
+         required: false
+         type: string
+       - name: status
+         in: query
+         description: Policy Status
+         required: false
+         type: string
+       - name: actionName
+         in: query
+         description: action name
+         required: false
+         type: string
+       - $ref: '#/parameters/iDisplayLength'
+       - $ref: '#/parameters/iDisplayStart'
+      tags:
+       - Policy
+      responses:
+        '200':
+          description: Returns list of polices
+          schema:
+            type: object
+            allOf:
+              - $ref: '#/definitions/Paged'
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/PolicyDetail'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: create a new policy
+      description: This would create a new event triggered job or policy based on an action
+      parameters:
+       - name: policysettings
+         in: body
+         description: policy setting parameters
+         schema:
+          $ref: '#/definitions/PolicySettings'
+      tags:
+       - Policy
+      responses:
+        '201':
+          description: Returns policy id.
+          schema:
+            type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/policy/{id}':
+    delete:
+      summary: Delete the policy
+      description: Used to delete policy
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Policy
+      responses:
+        '204':
+          description: Policy deleted
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/policy/{id}/enable':
+    put:
+      summary: Enables the policy
+      description: Enables the policy with specific ID
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: jobenableoption
+          in: query
+          required: false
+          type: string
+          description: Option of how to enable job.
+        - name: jobWindowLogId
+          in: query
+          required: false
+          type: string
+          description: Id of the JobWindowLog
+      tags:
+        - Policy
+      responses:
+        '200':
+          description: Enabled successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/policy/{id}/disable':
+    put:
+      summary: Disables the policy
+      description: Disables the policy with specific ID
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: flag
+          in: query
+          required: true
+          type: boolean
+          description: Abort jobs related to job.
+      tags:
+        - Policy
+      responses:
+        '200':
+          description: Disabled successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/policy/{jobCorrelatorId}':
+    put:
+      summary: update policy settings
+      description: This would update a existing policy
+      parameters:
+        - name: jobCorrelatorId
+          in: path
+          required: true
+          type: string
+        - name: policysettings
+          in: body
+          description: policy settings update parameters
+          schema:
+            $ref: '#/definitions/PolicySettings'
+      tags:
+        - Policy
+      responses:
+        '200':
+          description: Returns policy correlator id.
+          schema:
+            type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      summary: Returns the
+      description: Returns the details of the policy based on the ID
+      parameters:
+        - name: jobCorrelatorId
+          in: path
+          required: true
+          type: string
+        - name: policysettings
+          in: body
+          description: policy setting parameters
+          schema:
+            $ref: '#/definitions/PolicySettings'
+      tags:
+        - Policy
+      responses:
+        '200':
+          description: An array of device models for the specified brand
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DeviceModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/policy/chain/{jobCorrelatorId}':
+    get:
+      summary: Returns list of chained jobs in tree view for the given correlator id
+      parameters:
+        - name: jobCorrelatorId
+          in: path
+          type: string
+          required: true
+      tags:
+        - Policy
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Policy details exists
+          schema:
+            $ref: '#/definitions/ChainedJobViewModel'
+        '404':
+          description: Resource does not exist for given id
+        '500':
+          description: Error retrieving the policy tree for given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'             
+  '/campaign':
+    post:
+      summary: Create a new campaign
+      description: This endpoint creates a new campaign based on an action
+      parameters:
+        - name: campaign
+          in: body
+          description: bulk job
+          schema:
+            $ref: '#/definitions/CampaignSettings'
+      tags:
+        - Campaign
+      responses:
+        '201':
+          description: Returns a generated unique id for this device
+          schema:
+            type: integer
+            format: int64
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/campaign/{id}':
+    get:
+      summary: Returns the Details of the campaign
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Campaign  
+      responses:
+        '200':
+          description: An array of device models for the specified brand
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DeviceModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'  
+    put:
+      summary: Enables the editing of a campaign with particular id 
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: campaign
+          in: body
+          description: bulk job
+          schema:
+            $ref: '#/definitions/CampaignSettings'
+      tags:
+        - Campaign
+      responses:
+        '204':
+          description: update success
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary:
+        Deletes the Campaign with that id
+      description: |
+        Campaign with specific id is deleted
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Campaign
+      responses:
+        '204':
+          description: Campaign deleted successfully/no content
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while deleting Campaign
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/campaign/{id}/enable':
+    put:
+      summary: Enables the campaign
+      description: Enables the campaign with specific ID
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: jobenableoption
+          in: query
+          required: false
+          type: string
+          description: Option of how to enable job.
+        - name: jobWindowLogId
+          in: query
+          required: false
+          type: string
+          description: Id of the JobWindowLog
+      tags:
+        - Campaign
+      responses:
+        '200':
+          description: Enabled successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/campaign/{id}/disable':
+    put:
+      summary: Disables the campaign
+      description: Disables the campaign with specific ID
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: flag
+          in: query
+          required: true
+          type: boolean
+          description: Abort jobs related to job.
+      tags:
+        - Campaign
+      responses:
+        '200':
+          description: Disabled successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/campaign/statistic':
+    get:
+      summary:
+        Get the statistics of all campaign
+      description: |
+        Returns parameters of CampaignStatistics, based on ID
+      tags:
+        - Campaign
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+        - name: jobName
+          in: query
+          required: false
+          type: string
+          description: Name of Job
+        - name: actionName
+          in: query
+          required: false
+          type: string
+          description: Name of the action used with Job.
+        - name: jobStatus
+          in: query
+          required: false
+          type: string
+          description: Status of the Job ( COMPLETED, DISABLED, ENABLED, FAILED, SUSPENDED )
+      responses:
+        '200':
+          description: An array of CampaignStatistics
+          schema:
+            type: object
+            allOf:
+              - $ref: '#/definitions/Paged'
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/CampaignStatistics'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/campaign/{id}/statistic':
+    get:
+      summary:
+        Get the statistics for a campaign
+      description: |
+        Returns  CampaignStatistics for a given ID
+      tags:
+        - Campaign
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: CampaignStatistics for a given ID
+          schema:
+            $ref: '#/definitions/CampaignStatistics'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/campaign/{id}/window':
+    get:
+      summary: Used to fetch window list of campaign
+      description: Return a list of Window logs attached to particular campaign
+      tags:
+        - Campaign
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Returned successfully a list of window logs
+        '404':
+          description: Resource has not been found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/campaign/{id}/statistic/previous':
+    get:
+      summary:
+        Get  statistics for a campaign i.e n devices target and the time 
+      description: |
+        Returns   Array containing Array with number of devices target and the time .example [[12,1234],[13,1234]]
+      tags:
+        - Campaign
+      parameters:
+        - $ref: '#/parameters/objectid'         
+      responses:
+        '200':
+          description: CampaignStatistics for a given ID
+          schema:
+            type: array
+            items:
+              type: integer
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/campaign/schedule':
+    get:
+      summary: Returns the list of Campaigns with executed windows
+      description: Returned for timeline view in UI
+      tags:
+        - Campaign
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+        - name: jobName
+          in: query
+          required: false
+          type: string
+          description: Name of Job
+        - name: actionName
+          in: query
+          required: false
+          type: string
+          description: Name of the action used with Job.
+        - name: jobStatus
+          in: query
+          required: false
+          type: string
+          description: Status of the Job ( COMPLETED, DISABLED, ENABLED, FAILED, SUSPENDED )
+        - name: startDate
+          in: query
+          required: false
+          type: string
+          description: Start Date of the Job window ( format is epoch ) example 1463356800000
+        - name: endDate
+          in: query
+          required: false
+          type: string
+          description: End Date of the Job window ( format is epoch ) example 1463356800000
+      responses:
+        '200':
+          description: Date returned successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  '/eis/{eid}/operation/queue':
+     get:
+       summary:
+         Get all pending operations on the EUICC
+       tags:
+         - Subscription Management
+       parameters:
+        - $ref: '#/parameters/eid'
+       responses:
+        '200':
+          description: List of pending operations for the EUICC
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/InvocationModel'
+        '404':
+          description: Resource does not exist for given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+     post:
+       summary:
+         Queue a new async operation on the EUICC
+       tags:
+         - Subscription Management
+       parameters:
+        - $ref: '#/parameters/eid'
+        - name: operation
+          in: body
+          schema:
+            $ref: '#/definitions/EUICCAsyncOperation'
+       responses:
+        '201':
+          description: Successfully queued. Link to resource returned in header.
+        '404':
+          description: Resource does not exist for given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/eis/{eid}/operation/queue/{id}':
+     get:
+       summary:
+         Get currently executing operation
+       tags:
+         - Subscription Management
+       parameters:
+        - $ref: '#/parameters/eid'
+        - $ref: '#/parameters/objectid'
+       responses:
+        '200':
+          description: List of pending operations for the EUICC
+          schema:
+            $ref: '#/definitions/InvocationModel'
+        '404':
+          description: Resource does not exist for given id
+     delete:
+       summary:
+         Delete currently executing operation
+       tags:
+         - Subscription Management
+       parameters:
+        - $ref: '#/parameters/eid'
+        - $ref: '#/parameters/objectid'
+       responses:
+        '200':
+          description: Deleted
+        '404':
+          description: Resource does not exist for given id
+  '/eis/{eid}/operation/history':
+     get:
+       summary:
+         Get history of all operations on the EUICC
+       tags:
+         - Subscription Management
+       parameters:
+        - $ref: '#/parameters/eid'
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+       responses:
+        '200':
+          description: Paged list of historical operations for the EUICC
+          schema:
+            type: object
+            allOf:
+              - $ref: '#/definitions/Paged'
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/InvocationModel'
+        '404':
+          description: Resource does not exist for given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  '/eis':
+     get:
+       summary:
+         Get registered eUICC Information Set
+       description:
+         Returns parameters of ES2GetEISResponse based on eid and smsrId
+       tags:
+         - Subscription Management
+       parameters:
+        - name: eid
+          in: query
+          required: true
+          type: string
+          description: Registered e-UICC Id
+        - name: smsrId
+          in: query
+          required: false
+          type: string
+          description: Identification of the SM-SR currently in charge of eUICC management.
+       responses:
+        '200':
+          description: EIS Response
+        '404':
+          description: Resource does not exist for given id
+        '500':
+          description: Error retrieving the EIS details for given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+     
+  '/profile':
+    get:
+      summary: Returns a full list of personalized Profiles.
+      description: 
+        This returns a full list of available personalized Profiles in the inventory.
+      tags:
+        - Subscription Management
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An array of profiles
+        '500':
+          description: Error getting the profile list
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device':
+    get:
+      summary: Return the list of devices
+      description: |
+        This endpoint returns information about the devices
+        offered at a given location. The response includes the display name
+        and other details about each product, and lists the products in the
+        proper display order.
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+      tags:
+        - Device
+      responses:
+        '200':
+          description: An array of devices
+          schema:
+            type: object
+            allOf:
+              - $ref: '#/definitions/Paged'
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/ListableDevice'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new device
+      description: This endpoit creates a new device
+      parameters:
+        - name: device
+          in: body
+          description: Device stuff
+          schema:
+            $ref: '#/definitions/Device'
+      tags:
+        - Device
+      responses:
+        '201':
+          description: Returns a generated unique id for this device
+          schema:
+            type: integer
+            format: int64
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/compatibleplc':
+    get:
+      summary: Gets the compatible PLC clients for the device
+      description: This method is used during creation of the device to dynamically search for compatible clients.
+      parameters:
+        - name: deviceId
+          in: query
+          required: false
+          type: string
+          description: IMEI (device Id) of the Device ( not DB id )
+        - name: make
+          in: query
+          required: false
+          type: string
+          description: Manufacturer of the Device
+        - name: model
+          in: query
+          required: false
+          type: string
+          description: Model of the device
+      tags:
+      - Device
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Returned successfully a list of compatible PLC clients.
+        '404':
+          description: Resource not found.
+        '500':
+          description: Error retrieving compatible PLC clients
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}':
+    get:
+      summary: Returns the full device-entity's attributes
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Device details exists
+          schema:
+            $ref: '#/definitions/Device'
+        '404':
+          description: Device details does not exist for given id
+        '500':
+          description: Error retrieving the device details for given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Updates the device with given information
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: device
+          in: body
+          description: Device stuff
+          schema:
+            $ref: '#/definitions/Device'
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Device details exists
+          schema:
+            $ref: '#/definitions/Device'
+        '404':
+          description: Device details cannot be updated for given id
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes the device with given ID
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Device details exists
+          schema:
+            $ref: '#/definitions/Device'
+        '404':
+          description: Requested device not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'            
+  '/device/{id}/attacheddevice':
+    get:
+      summary: Returns all attached devices associated with the parent device, whose id is specified
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+        - name: deviceId
+          in: query
+          required: false
+          description: Id of the device attached to parent
+          type: string
+        - name: inUse
+          in: query
+          required: false
+          description: Is the device in use
+          type: string
+        - name: managed
+          in: query
+          required: false
+          description: Is the device managed
+          type: string
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Array of Device for device specified exists.
+          schema:
+            type: object
+            allOf:
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Device'
+        '404':
+          description: Device does not exist for a device with given id
+        '500':
+          description: Error retrieving the service tags for device with given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/compatibleplc':
+    get:
+      summary: Returns compatible PLC clients for this device.
+      description: Gets the list of compatible PLC Clients for this device.
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: PLC Clients returned successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/servicetag':
+    get:
+      summary: Returns all service tags associated with the device, whose id is specified
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Service tags for device specified exists.
+          schema:
+            $ref: '#/definitions/ServiceTag'
+        '404':
+          description: Service tags does not exist for a device with given id
+        '500':
+          description: Error retrieving the service tags for device with given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new service tag for the device or update service tag if exist.
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - name: serviceTag
+          in: body
+          schema:
+            $ref: '#/definitions/ServiceTag'
+        - $ref: '#/parameters/objectid'
+      responses:
+        '201':
+          description: Returns the location for newly created service tag
+          schema:
+            type: integer
+            format: int64
+        '500':
+          description: Error creating the service tag
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/servicetag/{name}':
+    put:
+      summary: Updates the service tag
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - name: serviceTag
+          in: body
+          schema:
+            $ref: '#/definitions/ServiceTag'
+        - $ref: '#/parameters/objectid'
+        - $ref: '#/parameters/name'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: integer
+            format: int64
+        '404':
+          description: Service tag not found
+        '500':
+          description: Error updating the service tag
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes the service tag
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - $ref: '#/parameters/name'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: integer
+            format: int64
+        '404':
+          description: Service tag not found
+        '500':
+          description: Error deleting the service tag
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/usertag':
+    get:
+      summary: Returns all user tags associated with the device, whose id is specified
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User tags for device specified exists.
+          schema:
+            $ref: '#/definitions/UserTag'
+        '404':
+          description: User tags does not exist for a device with given id
+        '500':
+          description: Error retrieving the User tags for device with given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new user tag for the device or updates the existing.
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - name: userTag
+          in: body
+          schema:
+            $ref: '#/definitions/UserTag'
+        - $ref: '#/parameters/objectid'
+      responses:
+        '201':
+          description: Returns the location for newly created user tag
+          schema:
+            type: integer
+            format: int64
+        '500':
+          description: Error creating the user tag
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/usertag/{name}':
+    put:
+      summary: Updates the user tag
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - name: userTag
+          in: body
+          schema:
+            $ref: '#/definitions/UserTag'
+        - $ref: '#/parameters/objectid'
+        - $ref: '#/parameters/name'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: integer
+            format: int64
+        '404':
+          description: User tag not found
+        '500':
+          description: Error updating the user tag
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes the user tag
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - $ref: '#/parameters/name'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: integer
+            format: int64
+        '404':
+          description: User tag not found
+        '500':
+          description: Error deleting the user tag
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/job/queue':
+    get:
+      summary: Returns the list of jobs queued for that device
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: List of jobs queued for the device
+          schema:
+            type: object
+            allOf:
+              - $ref: '#/definitions/Paged'
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/JobModel'
+        '500':
+          description: Error retrieving the job details for device with given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/job':
+    post:
+      summary: Queues a single device job using a primitive or an action for the device
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - name: singleDeviceJob
+          in: body
+          schema:
+            $ref: '#/definitions/SingleDeviceJob'
+        - $ref: '#/parameters/objectid'
+      responses:
+        '201':
+          description: Returns the location for newly queued job
+          schema:
+            type: integer
+            format: int64
+        '400':
+          description: Failed to execute
+        '500':
+          description: Error submitting the single device job
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/job/history':
+    get:
+      summary: Returns list of finalized jobs
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - $ref: '#/parameters/includeJobDetails'
+      responses:
+        '200':
+          description: List of finalized jobs for the device
+          schema:
+            type: object
+            allOf:
+              - $ref: '#/definitions/Paged'
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/JobModel'
+        '500':
+          description: Error retrieving the job history
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/job/history/retry':
+    get:
+      summary: Returns list of job retry history
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+        - name: actionName
+          in: query
+          description: action name
+          required: false
+          type: string
+        - name: jobName
+          in: query
+          description: job name
+          required: false
+          type: string
+        - name: queueDate
+          in: query
+          description: queued date
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: List of the job retry history
+        '500':
+          description: Error getting the list of retry jobs
+        default:
+          description: Unexpected error
+  '/device/{id}/job/{jobCorrelatorId}':
+    get:
+      summary: Returns all Job Details associated with the device, whose id is specified
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: jobCorrelatorId
+          in: path
+          type: string
+          required: true
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Job Details for device specified exists.
+          schema:
+            $ref: '#/definitions/JobResultDetail'
+        '404':
+          description: Job Details does not exist for a device with given id
+        '500':
+          description: Error retrieving the job details for device with given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/dynamicvariable':
+    get:
+      summary: Returns the list of all dynamic variables for the device
+      tags:
+        - Device
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An array of dynamic variables
+          schema:
+            type: object
+            allOf:
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/DynamicVariable'
+        '500':
+          description: Error retrieving the dynamic variables for the given device
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new dynamic variables or updates the existing.
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - name: dynamicVariable
+          in: body
+          schema:
+            $ref: '#/definitions/DynamicVariable'
+        - $ref: '#/parameters/objectid'
+      responses:
+        '201':
+          description: Returns the location for newly created dynamic variable
+          schema:
+            type: integer
+            format: int64
+        '500':
+          description: Error submitting the single device job
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/dynamicvariable/{name}':
+    put:
+      summary: Updates the dynamic variable
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - name: dynamicVariable
+          in: body
+          schema:
+            $ref: '#/definitions/DynamicVariable'
+        - $ref: '#/parameters/name'
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: integer
+            format: int64
+        '404':
+          description: Dynamic variable not found
+        '500':
+          description: Error updating the dynamic variable
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes the dynamic variable
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - $ref: '#/parameters/name'
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: integer
+            format: int64
+        '404':
+          description: Dynamic variable not found
+        '500':
+          description: Error deleting the dynamic variable
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/customattribute':
+    get:
+      summary: Returns the list of custom attributes for the device
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: An array of custom attributes
+          schema:
+            type: object
+            allOf:
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/CustomAttributes'
+        '500':
+          description: Error retrieving the custom attributes for the given device
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Saves the custom attributes for the device
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: customAttributes
+          in: body
+          schema:
+            $ref: '#/definitions/CustomAttributes'
+      responses:
+        '200':
+          description: Success
+        '500':
+          description: Error saving the custom attributes
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/action':
+    get:
+      summary: Returns the list of actions that are compatible for the device
+      tags:
+        - Action
+        - Device
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An Array compatible actions
+          schema:
+            type: object
+            allOf:
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Action'
+        '500':
+          description: Error retrieving the actions compatible for the given device
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/log':
+    get:
+      summary: Returns device communication logs for specified device
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Device's communication logs, if logging is enabled on device.
+          schema:
+            $ref: '#/definitions/DeviceLog'
+        '404':
+          description: Communication Log does not exist for a device with given id.
+        '500':
+          description: Error retrieving the communication log for device with given id.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete device communication logs for device specified by device id
+      tags:
+        - Device
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Device communication logs deleted successfully
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/application':
+    post:
+      summary: Perform install / uninstall of an application
+      tags:
+        - Device
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: appParams
+          in: body
+          schema:
+            $ref: '#/definitions/ApplicationCommandParam'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: on successful operation
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      summary: Gets all the applications specific to this device
+      tags:
+        - Device
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: on successful fetch of all the applications
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/primitive':
+    get:
+      summary: Get Supported primitives of active device
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Returns array of primitives for a device
+          schema:
+            type: array
+            items:
+              type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/{id}/primitive/{name}':
+    get:
+      summary: Get Supported primitives of active device based on primitive name, the primitiveName can be comma separated primitive Names
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: name
+          in: path
+          required: true
+          type: string
+          description: This can be more than one primitive name (comma separated primitive Names required)
+      responses:
+        '200':
+          description: Returns array of full or subset of primitives supported
+        '404':
+          description: primitives not found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/criteria/{id}':
+    post:
+      summary: Invokes the selected criteria on devices to filter them.
+      tags:
+        - Device
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: reqParams
+          in: body
+          description: parameters for selected criteria in JSON format.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoked
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/criteria/{id}/count':
+    post:
+      summary: Returns the count of devices filtered by criterias. This method can take some time or even timeout.
+      tags:
+        - Device
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: reqParams
+          in: body
+          description: parameters for selected criteria in JSON format.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Count returned.
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/customer/{name}':
+    get:
+      summary: List the devices assigned to this customer
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/name'
+      responses:
+        '200':
+          description: successfully returned list of devices
+        '500':
+          description: Internal serer error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/subscriber/{name}':
+    get:
+      summary: List the devices assigned to this subscriber
+      tags:
+        - Device
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/name'
+      responses:
+        '200':
+          description: successfully returned list of devices
+        '500':
+          description: Internal serer error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/device/fault/{id}/cease':
+    delete:
+      summary: Stops the fault.
+      description: Used to stop the FAULT  by updating the cease time with current date.
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Device
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Stopped successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while stopping the resource
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/devicetype':
+    get:
+      summary: Return the device Type properties
+      description: |
+        This endpoint return the device type information based on the manufacturer and the model.
+      parameters:
+        - name: manufacturer
+          in: query
+          description: Device make
+          required: true
+          type: string
+        - name: model
+          in: query
+          description: Device model
+          required: true
+          type: string
+      tags:
+        - DeviceType
+      responses:
+        '200':
+          description: An array of device type properties
+          schema:
+            type: object
+            allOf:
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/DevicePropertyList'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Creates a device Type setting
+      tags:
+        - DeviceType
+      parameters:
+        - name: deviceType
+          in: body
+          schema:
+            $ref: '#/definitions/DeviceProperty'
+      responses:
+        '201':
+          description: Returns a generated unique id the newly created DeviceType setting
+          schema:
+            type: integer
+            format: int64
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update details of a DeviceType
+      tags:
+        - DeviceType
+      consumes:
+        - application/json
+      parameters:
+        - name: manufacturer
+          in: query
+          description: Device make
+          required: true
+          type: string
+        - name: model
+          in: query
+          description: Device model
+          required: true
+          type: string
+        - name: deviceType
+          in: body
+          schema:
+            $ref: '#/definitions/DeviceProperty'
+      responses:
+        '200':
+          description: The update is successful
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/devicetype/protocol':
+    get:
+      summary: Returns the details of the protocol supported for the manufacturer and model.
+      parameters:
+        - name: manufacturer
+          in: query
+          description: Device make
+          required: true
+          type: string
+        - name: model
+          in: query
+          description: Device model
+          required: true
+          type: string
+      tags:
+        - DeviceType
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An Array of Protocols supported by the device
+          schema:
+            $ref: '#/definitions/ProtocolDeviceTypeMeta'
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'           
+  '/action':
+    get:
+      summary: Returns list of all actions
+      tags:
+        - Action
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+      responses:
+        '200':
+          description: An Array of all actions
+          schema:
+            type: object
+            allOf:
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Action'
+        '500':
+          description: Error retrieving the Actions details for given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes the action based on the name of the action.
+      parameters:
+        - name: name
+          type: string
+          in: query
+          required: true
+          description: Name of Action for delete
+      tags:
+        - Action
+      responses:
+        '200':
+          description: Deletes the particular Action, based on the name.
+        '404':
+          description: Action for delete was not found
+        '500':
+          description: Internal server error. Action may be in use.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Add action to the system
+      description: This method will add action to system.
+      parameters:
+        - name: action
+          in: body
+          description: Full Action
+          schema:
+            $ref: '#/definitions/Action'
+      tags:
+        - Action
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: Action created successfully
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/action/{id}':
+    get:
+      summary: Returns the action selected by id
+      tags:
+        - Action
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: A single action
+          schema:
+            $ref: '#/definitions/Action'
+        '500':
+          description: Error retrieving the Actions details for given id
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Deletes the action based on its id
+      tags:
+        - Action
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Resource has been deleted
+        '400':
+          description: Queried resource was not found
+        '500':
+          description: Internal server error. Action may be in use
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Modify the action record
+      description: This method will update the existing action
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: action
+          in: body
+          description: Action update
+          schema:
+            $ref: '#/definitions/Action'
+      tags:
+        - Action
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: Action updated successfully
+        '404':
+          description: Action to update not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/action/{id}/xml':
+    get:
+      summary: Returns the primitive of the action in both JSON and XML format
+      description: Used to retrieve information about primitive of an action
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - text/plain
+      tags:
+        - Action
+      responses:
+        '200':
+          description: Action updated successfully
+        '404':
+          description: Action to update not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/action/export':
+    get:
+      summary:
+        Get All Actions exported in XML file.
+      description: |
+        Returns the xml file with exported actions.
+      produces:
+        - text/xml
+      tags:
+        - Action
+      responses:
+        '200':
+          description: Exported Successfully
+        '404':
+          description: No Actions present in the system
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/action/import':
+    post:
+      summary:
+        Import of Actions.
+      description: |
+        Imports Actions from file.
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: update_duplicate
+          in: formData
+          type: boolean
+          required: true
+        - name: uploadData
+          in: formData
+          description: File
+          required: true
+          type: file
+      tags:
+        - Action
+      responses:
+        '201':
+          description: File imported successfuly
+        '400':
+          description: Bad request.
+        '500':
+          description: Error while sending scripts/cannot consume content type.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/user':
+    get:
+      summary: Returns the list of all users in the scope
+      description: |
+        Returns the list of all users in the scope. A global admin will be able to retrieve all users in the system,
+        whereas a tenant admin will only be able to retrieve users inside that tenant
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+      tags:
+        - User
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An array of users
+          schema:
+            type: object
+            allOf:
+              - $ref: '#/definitions/Paged'
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/User'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new user
+      tags:
+        - User
+      parameters:
+        - name: User
+          description: User object
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: Returns a generated unique id the newly created tenant
+          schema:
+            type: integer
+            format: int64
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/user/{id}':
+    get:
+      summary: Returns information about single user
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - User
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: The information about user
+          schema:
+            $ref: '#/definitions/User'
+        '404':
+          description: User does not exist
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update details of a user
+      tags:
+        - User
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: user
+          in: body
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: The update is successful
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a User specified by id
+      tags:
+        - User
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: The delete is successful
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+  '/tenant':
+    get:
+      summary: Returns the list of tenants in all tenants in the system for a Global-Admin user
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+      tags:
+        - Tenant
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An Array of tenants
+          schema:
+            $ref: '#/definitions/Tenant'
+            type: object
+            allOf:
+              - $ref: '#/definitions/Paged'
+              - properties:
+                  aaData:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Tenant'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Create a new tenant
+      tags:
+        - Tenant
+      parameters:
+        - name: Tenant
+          description: Tenant information
+          in: body
+          schema:
+            $ref: '#/definitions/Tenant'
+      responses:
+        '201':
+          description: Returns a generated unique id the newly created tenant
+          schema:
+            type: integer
+            format: int64
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/tenant/{id}':
+    get:
+      summary: Returns information about individual tenant with specified id
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Tenant
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: The information about tenant
+          schema:
+            $ref: '#/definitions/Tenant'
+        '404':
+          description: Tenant does not exist
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update details of a tenant
+      tags:
+        - Tenant
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: tenant
+          in: body
+          schema:
+            $ref: '#/definitions/Tenant'
+      responses:
+        '200':
+          description: The update is successful
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a tenant specified by id
+      tags:
+        - Tenant
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: The delete is successful
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/firmware':
+    get:
+      summary: Returns the list of all firmware images
+      tags:
+        - Firmware
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+        - name: manufacturer
+          in: query
+          description: Manufacturer
+          required: false
+          type: string
+        - name: model
+          in: query
+          description: Model
+          required: false
+          type: string
+        - name: name
+          in: query
+          description: Name of the firmware
+          required: false
+          type: string
+        - name: version
+          in: query
+          description: Version of the firmware
+          required: false
+          type: string
+        - name: prerequisite
+          in: query
+          description: Previous software version required
+          required: false
+          type: string
+      responses:
+        '200':
+          description: An Array of Firmware images
+          schema:
+            $ref: '#/definitions/FirmwareList'
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Creates a new firmware Image
+      tags:
+        - Firmware
+      consumes:
+        - application/json  
+      parameters:
+        - name: Firmware
+          description: Firmware object
+          in: body
+          schema:
+            $ref: '#/definitions/Firmware'
+      responses:
+        '201':
+          description: Created a Firmware Image
+          schema:
+            type: integer
+            format: int64
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/firmware/{id}':
+    get:
+      summary:
+        Returns Firmware with specific id.
+      description: |
+        Returns all data about the Firmware with specific id.
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      tags:
+        - Firmware
+      responses:
+        '200':
+          description: Data returned successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while getting Firmware.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update details of a Firmware Image
+      tags:
+        - Firmware
+      consumes:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: user
+          in: body
+          schema:
+            $ref: '#/definitions/Firmware'
+      responses:
+        '200':
+          description: The update is successful
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary:
+        Deletes the Firmware Image with that id
+      description: |
+        Firmware with specific id is deleted
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Firmware
+      responses:
+        '204':
+          description: Firmware deleted successfully/no content
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while deleting firmware
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/firmware/upc':
+    post:
+      summary:
+        Importing UPC Image file.
+      description:
+        Imports the UPC file into system
+      consumes:
+        - multipart/form-data
+      tags:
+        - Firmware
+      parameters:
+        - name: fileupload
+          in: formData
+          description: File
+          required: true
+          type: file
+      responses:
+        '200':
+          description: Firmware was imported successfully, returning the location.
+        '500':
+          description: Internal server error, transfer interrupted or image already exists.
+  '/firmware/upc/binaryFile/{imageName}':
+    put:
+      summary:
+        Importing Firmware binary file.
+      description:
+        Imports binary file into system.
+      consumes:
+        - multipart/form-data
+      tags:
+        - Firmware
+      parameters:
+        - name: imageName
+          in: path
+          type: string
+          required: true
+        - name: binaryfileupload
+          in: formData
+          description: File
+          required: true
+          type: file
+      responses:
+        '200':
+          description: Binary file was imported successfully, returning the location.
+        '404':
+          description: Resource not found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error' 
+  '/firmware/upc/binaryURL/{imageName}':
+    put:
+      summary:
+        Importing Firmware binary file from URL.
+      description:
+        Downloads binary file into system.
+      consumes:
+        - application/json
+      tags:
+        - Firmware
+      parameters:
+        - name: imageName
+          in: path
+          type: string
+          required: true
+        - name: urlToDownload
+          in: body
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Binary file was imported successfully, returning the location.
+        '404':
+          description: Resource not found
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error' 
+  '/application':
+    get:
+      summary: Returns a full list of applications.
+      description: |
+        This returns a full list of available applications.
+      tags:
+        - Application
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: An array of applications
+        '500':
+          description: Error getting the application list
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Creates a new application.
+      description: |
+        Creates a new application in list of available. Application may be Approved or Expired or Managed. Not tenant aware.
+      tags:
+        - Application
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: name
+          type: string
+          in: formData
+          required: true
+          description: Name of application
+        - name: state
+          type: string
+          in: formData
+          required: true
+          description: State of application ( APPROVED or EXPIRED or MANAGED )
+        - name: version
+          type: string
+          in: formData
+          required: true
+          description: Version of application
+        - name: manufacturer
+          type: string
+          in: formData
+          required: true
+          description: Manufacturer of device
+        - name: model
+          in: formData
+          type: string
+          required: true
+          description: Model of device
+        - name: fileupload
+          in: formData
+          description: File
+          required: true
+          type: file
+      responses:
+        '201':
+          description: Application created successful, returns location of created application
+        '500':
+          description: Error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/application/{id}':
+    get:
+      summary:
+        Returns application with specific id.
+      description: |
+        Returns all data about the application with specific id.
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      tags:
+        - Application
+      responses:
+        '200':
+          description: Data returned successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while getting application.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary:
+        Updates the application with specyfic id with new data.
+      description: |
+        Updates the application with specified id with new data
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: name
+          type: string
+          in: formData
+          required: true
+          description: Name of application
+        - name: state
+          type: string
+          in: formData
+          required: true
+          description: State of application ( APPROVED or EXPIRED or MANAGED )
+        - name: version
+          type: string
+          in: formData
+          required: true
+          description: Version of application
+        - name: manufacturer
+          type: string
+          in: formData
+          required: true
+          description: Manufacturer of device
+        - name: model
+          in: formData
+          type: string
+          required: true
+          description: Model of device
+        - name: fileupload
+          in: formData
+          description: File
+          required: true
+          type: file
+      tags:
+        - Application
+      consumes:
+        - multipart/form-data
+      responses:
+        '200':
+          description: Application updated successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while updating application
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary:
+        Deletes the application with that id
+      description: |
+        Application with specyfic id is deleted
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Application
+      consumes:
+        - application/json
+      responses:
+        '204':
+          description: Application deleted successfully/no content
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while deleting application
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/faultmanagement':
+    get:
+      summary: Returns a full list of Fault policies.
+      description: |
+        This returns a full list of available fault policies per tenant.
+      tags:
+        - FaultManagement
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+      responses:
+        '200':
+          description: An array of fault policy
+        '500':
+          description: Error getting the fault policy list
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary:
+        Add Fault policy to the system.
+      description: |
+        Adds a fault policy to the system for a tenant associated
+      consumes:
+        - application/json
+      parameters:
+        - name: FaultPolicyRequest
+          in: body
+          schema:
+            $ref: '#/definitions/FaultPolicyRequest'
+      tags:
+        - FaultManagement
+      responses:
+        '201':
+          description: Fault Policy created successful, returns location of created policy
+        '500':
+          description: Error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/faultmanagement/{id}':
+    get:
+      summary:
+        Returns fault policy with specific id.
+      description: |
+        Returns all data about the fault policy with specific id.
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      tags:
+        - FaultManagement
+      responses:
+        '200':
+          description: Data returned successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while getting application.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary:
+        Updates the fault policy with specyfic id with new data.
+      description: |
+        Updates the fault policy with specified id with new data
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: FaultPolicyRequest
+          in: body
+          schema:
+            $ref: '#/definitions/FaultPolicyRequest'
+      tags:
+        - FaultManagement
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: Fault Policy updated successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while updating Fault Policy
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary:
+        Deletes the fault policy with that id
+      description: |
+        Fault Policy with specyfic id is deleted
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - FaultManagement
+      consumes:
+        - application/json
+      responses:
+        '204':
+          description: Fault Policy deleted successfully/no content
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while deleting fault policy
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/faultmanagement/{id}/enable':
+    put:
+      summary: Enables the faultmanagement
+      description: Use to enable the faultmanagement
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - FaultManagement
+      responses:
+        '200':
+          description: FaultManagement has been enabled
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while turning on the fault
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/faultmanagement/{id}/disable':
+    put:
+      summary: Disables the faultmanagement
+      description: Use to disable the faultmanagement
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - FaultManagement
+      responses:
+        '200':
+          description: FaultManagement has been disabled
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while turning off the fault
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/faultmanagement/{id}/condition':
+    get:
+      summary: Returns the conditions of faultmanagement
+      description: Used to fetch the conditions of faultmanagement
+      parameters:
+        - $ref: '#/parameters/objectid'
+      produces:
+        - application/json
+      tags:
+        - FaultManagement
+      responses:
+        '200':
+          description: Returnes succesfull the device fault entity
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while fetching the resource
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/script':
+    get:
+      summary:
+        Returns array of all scripts. SuperAdmin access only
+      description: |
+        Returns an array of available scripts
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/iDisplayLength'
+        - $ref: '#/parameters/iDisplayStart'
+      tags:
+        - Script
+      responses:
+        '200':
+          description: Data returned successfully
+        '500':
+          description: Error while getting scripts
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary:
+        Import of scripts. SuperAdmin access only
+      description: |
+        Imports a scripts from file.
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: update_duplicate
+          in: formData
+          type: boolean
+          required: true
+        - name: uploadData
+          in: formData
+          description: File
+          required: true
+          type: file
+      tags:
+        - Script
+      responses:
+        '201':
+          description: File imported successfuly
+        '400':
+          description: Bad request.
+        '500':
+          description: Error while sending scripts/cannot consume content type.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/script/{id}':
+    get:
+      summary:
+        Returns a script attached to specified id
+      description: |
+        Returns all information about specified script with that id
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Script
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Data returned successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while getting script
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary:
+        Updates script with new data
+      description:
+        Updates script with specified id with new data
+      parameters:
+        - $ref: '#/parameters/objectid'
+        - name: ScriptDetailExample
+          description: Example of script detail
+          in: body
+          schema:
+            $ref: '#/definitions/ScriptDetailExample'
+      tags:
+        - Script
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      responses:
+        '200':
+          description: Script updated successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while updating script
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary:
+        Deleted the script
+      description: |
+        Deletes the script with specified id.
+      parameters:
+        - $ref: '#/parameters/objectid'
+      tags:
+        - Script
+      responses:
+        '204':
+          description: Script deleted successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error while deleting script
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/script/export':
+    get:
+      summary:
+        Exports All scripts in xml file.
+      description: |
+        All scripts stored in xml file are exported from the system.
+      tags:
+        - Script
+      produces:
+        - text/xml
+      responses:
+        '200':
+          description: Exported successfully
+        '404':
+          description: No scripts found in system to export
+        '500':
+          description: Error while exporting the files. Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/selectioncriteria':
+    get:
+      summary:
+        Get all Selection Criterias, simple list of them.
+      description: |
+        Returns all information about specified script with that id
+      tags:
+        - SelectionCriteria
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Resource returned successfully
+          schema:
+            $ref: '#/definitions/CriteriaList'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary:
+        Imports the Selection Criteria from XML file.
+      description: |
+        Imports the Selection criterias from provided XML file.
+      tags:
+        - SelectionCriteria
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: fileupload
+          in: formData
+          description: File
+          required: true
+          type: file
+      responses:
+        '201':
+          description: Imported
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary:
+        Deletes all selection criteria defined in the input string.
+      description: |
+        Used to delete many objects at once. Example of input: 14,34,1001
+      tags:
+        - SelectionCriteria
+      consumes:
+        - text/plain
+      parameters:
+        - name: array
+          in: body
+          description:
+             A comma separated list of ID's. Example 14,34,1001
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/selectioncriteria/{id}':
+    get:
+      summary:
+        Get the particular Selection Criteria.
+      description: |
+        Get one particular Selection Criteria, based on provided ID.
+      tags:
+        - SelectionCriteria
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Resources returned successfully
+          schema:
+            $ref: '#/definitions/CriteriaTemplate'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary:
+        Deletes the Selection Criteria
+      description: |
+        Removes the Selection Criteria, based on provided ID.
+      tags:
+        - SelectionCriteria
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Deleted successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/selectioncriteria/{id}/param':
+    get:
+      summary:
+        Get the parameters of particular selection criteria
+      description: |
+        Returns parameters of selection criteria, based on ID
+      tags:
+        - SelectionCriteria
+      parameters:
+        - $ref: '#/parameters/objectid'
+      responses:
+        '200':
+          description: Returned successfully
+          schema:
+            $ref: '#/definitions/CriteriaParam'
+        '404':
+          description: Resource not found
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  '/selectioncriteria/export':
+    get:
+      summary:
+        Get All Selection Criteria exported in XML file.
+      description: |
+        Returns the xml file with exported selection criteria.
+      produces:
+        - text/xml
+      tags:
+        - SelectionCriteria
+      responses:
+        '200':
+          description: Exported Successfully
+        '404':
+          description: No criterias present in the system
+        '500':
+          description: Internal server error
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Primitive:
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+  SceDetailMeta:
+    properties:
+      key:
+        type: string
+        readOnly: true
+        description: 'Node value'
+      value:
+        type: string
+        readOnly: true
+        description: 'Cluster wide MD5 value'
+  ActionPrimitive:
+    properties:
+      json:
+        $ref: '#/definitions/Action'
+      xml:
+        type: string
+  SceMeta:
+    properties:
+      key:
+        type: string
+        readOnly: true
+        description: identifier of the SCE property
+      overridden:
+        type: boolean
+        readOnly: true
+        description: true if the SCE property contains a non-default value
+      fileUpload:
+        type: boolean
+        readOnly: true
+        description: 'true if this is a file-based property, false if it is a string-based property'
+      sensitive:
+        type: boolean
+        readOnly: true
+        description: 'true if this string-based property contains sensitive data. Sensitive data can not be read, only written'
+      textArea:
+        type: boolean
+        readOnly: true
+        description: true if this string-based property can span multiple lines
+      checkbox:
+        type: boolean
+        readOnly: true
+        description: true if this string-based property represents a boolean
+      tenantSpecific:
+        type: boolean
+        readOnly: true
+        description: true if this property is tenant specific
+      escaped:
+        type: boolean
+        readOnly: true
+        description: 'true if this string-based property needs to be escaped: TODO: GET RID OF THIS'
+      selectValues:
+        type: array
+        items:
+          type: string
+        readOnly: true
+        description: Enumeration of acceptable values
+      value:
+        type: string
+        readOnly: true
+        description: 'If this property is string-based, the value contains the current string-based value. If the property is file-based, the value contains the current filename'
+      fileUploadPassword:
+        type: boolean
+        readOnly: true
+        description: 'true if this file-based property contains encrypted content that needs to be decrypted using a password. Eg: PCSK10 format'
+    required:
+      - key
+  PersistentObject:
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Unique identifier
+      updatedOn:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Timestamp of last modification. Milliseconds since epoch
+      createdOn:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Timestamp of creation. Milliseconds since epoch
+  LicenseDetails:
+    properties:
+      licenseVersion:
+        type: string
+      licenseExpirationDate:
+        type: string
+      licenseNumberOfSubscribers:
+        type: integer
+        format: int64
+      licenseBasicCount:
+        type: integer
+        format: int64
+      licenseAdvancedCount:
+        type: integer
+        format: int64
+      allowedProtocols:
+        type: string
+      allowedFeatures:
+        type: string
+      hostIds:
+        type: string
+      licensedNumberOfESDevices:
+        type: integer
+        format: int64
+      licensedNumberOfRcsDevices:
+        type: integer
+        format: int64
+      licensedNumberOfTenants:
+        type: integer
+        format: int64
+      licensedTPS:
+        type: integer
+        format: int64
+      licenseNumberOfGatewayConnectedDevices:
+        type: integer
+        format: int64
+      deploymentType:
+        type: string
+  OperationalInfo:
+    properties:
+      hostId:
+        type: string
+      currentAdvancedSubscribers:
+        type: integer
+        format: int64
+      currentBasicSubsribers:
+        type: integer
+        format: int64
+      currentESDeviceCount:
+        type: integer
+        format: int64
+      currentRcsDeviceCount:
+        type: integer
+        format: int64
+      currentTenantCount:
+        type: integer
+        format: int64
+  About:
+    properties:
+      productName:
+        type: string
+        description: Full name of the product.
+      version:
+        type: string
+        description: Version of currently installed product.
+      buildDate:
+        type: integer
+        format: int64
+        description: Timestamp of build date. Milliseconds since epoch.
+      iotContentDate:
+        type: integer
+        format: int64
+        description: Timestamp of IoT content. Milliseconds since epoch.
+      loadedProtocol:
+        type: array
+        items:
+          type: string
+      licenseInfo:
+        $ref: '#/definitions/LicenseDetails'
+        description: Detailed license information.
+      operationalInfo:
+        $ref: '#/definitions/OperationalInfo'
+        description: Detailed operational inforamtion.
+  ListableDevice:
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Unique identifier
+      deviceId:
+        type: string
+      networkId:
+        type: string
+      subscriberId:
+        type: string
+      customerId:
+        type: string
+      oui:
+        type: string          
+        description: oui associated with  device 
+      productClass:
+        type: string
+        description: productClass associated with  device
+      model:
+        type: string
+      manufacturer:
+        type: string
+      managed:
+        type: boolean
+      inUse:
+        type: boolean
+      emailId:
+        type: string
+      protocolRealm:
+        type: array
+        items:
+          type: string
+
+  CriteriaList:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+  CriteriaTemplate:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          description:
+            type: string
+          criteriaExpression:
+            type: string
+          criteriaParams:
+            type: array
+            items:
+              $ref: '#/definitions/CriteriaParam'
+  CriteriaParam:
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      nameKey:
+        type: string
+      required:
+        type: boolean
+      defaultValue:
+        type: string
+      hint:
+        type: string
+      type:
+        type: string
+      criteriaOptions:
+        type: array
+        items:
+          $ref: '#/definitions/CriteriaOption'
+  CriteriaOption:
+    properties:
+      value:
+        type: string
+  CriteriaParamArray:
+    properties:
+      default:
+        type: string
+    additionalProperties:
+      type: string
+  Device:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          deviceId:
+            type: string
+          networkId:
+            type: string
+          iccId:
+            type: string
+          subscriberId:
+            type: string
+          eid:
+            type: string
+          oui:
+            type: string          
+            description: oui associated with  device 
+          productClass:
+            type: string          
+            description: productClass associated with  device 
+          emailId:
+            type: string
+          jabberId:
+            type: string
+          routingId:
+            type: string
+          customerId:
+            type: string
+          managed:
+            type: boolean
+          inUse:
+            type: boolean
+          model:
+            type: string
+          manufacturer:
+            type: string
+          deviceToken:
+            type: string
+          pushToken:
+            type: string
+          logging:
+            type: boolean
+          firmwareVersion:
+            type: string
+          profileId:
+           type: string
+          parentDeviceId:
+           type: string
+          parentId:
+           type: integer
+           format: int64
+          protocolRealm:
+            type: array
+            items:
+              type: string
+          nativeClient:
+            $ref: '#/definitions/Client'
+          plcClient:
+            $ref: '#/definitions/Client'
+          customAttributes:
+            $ref: '#/definitions/CustomAttributes'
+          serviceTags:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceTag'
+          dynamicVariables:
+            type: array
+            items:
+              $ref: '#/definitions/DynamicVariable'
+          userTags:
+            type: array
+            items:
+              $ref: '#/definitions/UserTag'
+          hostDevice:
+            $ref: '#/definitions/HostDevice'    
+  UserTag:
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+  DynamicVariable:
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+      dontCopy:
+        type: boolean
+      resetOnCopy:
+        type: boolean
+      resetValue:
+        type: string
+      encrypt:
+        type: boolean
+  ServiceTag:
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+      dontCopy:
+        type: boolean
+      resetOnCopy:
+        type: boolean
+      resetValue:
+        type: string
+  DeviceFault:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          id:
+            type: integer
+            format: int64
+            readOnly: true
+          resourceUri:
+            type: string
+          resourceValue:
+            type: string
+          ceaseDate:
+            type: integer
+            format: int64
+            readOnly: true
+            description: Timestamp of queuing job. Milliseconds since epoch
+  FaultPolicyRequest:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          id:
+            type: integer
+            format: int64
+            readOnly: true
+          name:
+            type: string
+          filterCriteria:
+            $ref: '#/definitions/FilterCriteria'
+          resourceName:
+            type: string
+          enable:
+            type: boolean
+          reportingInterval:
+            type: integer
+            format: int64
+            readOnly: true
+          faultPolicyConditions:
+            type: array
+            items:
+              $ref: '#/definitions/FaultConditionParam'
+          faultClearCondition:
+            $ref: '#/definitions/FaultConditionParam'
+  FaultConditionParam:
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      name:
+        type: string
+      category:
+        type: string
+        enum:
+          - CRITICAL
+          - MAJOR
+          - MINOR
+          - INFORMATIONAL
+      conditionValue:
+        type: string
+  FilterCriteria:
+    properties:
+      make:
+        type: string
+      model:
+        type: string
+      firmware:
+        type: string
+  JobResultDetail:
+    properties:
+      jobResultId:
+        type: integer
+        format: int64
+        readOnly: true
+      jobStatus:
+        type: string
+      jobSubStatus:
+        type: string
+      jobCorrelatorId:
+        type: string
+      jobName:
+        type: string
+      nativeClientTargeted:
+        type: boolean
+      primitiveRequest:
+        type: string
+      primitiveResponse:
+        type: string
+      errorMessage:
+        type: string
+      actionName:
+        type: string
+      primitiveName:
+        type: string
+      protocolPreference:
+        type: string
+      queuedTime:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Timestamp of queuing job. Milliseconds since epoch
+      expirationTimeOutSeconds:
+        type: integer
+        format: int64
+        description:  Operation time out
+      executionTimeOutSeconds:
+        type: integer
+        format: int64
+        description:  operation time out  after the device connects back
+  InvocationModel:
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Unique identifier
+      status:
+        type: string
+      subStatus:
+        type: string
+      faultString:
+        type: string
+      operation:
+        type: string
+      input:
+        type: string
+      output:
+        type: string
+      queuedTime:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Timestamp of queuing job. Milliseconds since epoch
+      startTime:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Timestamp of starting job. Milliseconds since epoch
+      endTime:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Timestamp of job finished. Milliseconds since epoch
+
+  JobModel:
+    allOf:
+      - $ref: '#/definitions/InvocationModel'
+      - properties:
+          jobId:
+            type: integer
+            format: int64
+            readOnly: true
+          djrId:
+            type: integer
+            format: int64
+            readOnly: true
+          djrlId:
+            type: integer
+            format: int64
+            readOnly: true
+          nbiCorrelator:
+            type: string
+          jobName:
+            type: string
+          actionName:
+            type: string
+          nativeClientTargeted:
+            type: boolean
+
+  EUICCAsyncOperation:
+    type: object
+    discriminator: operation
+    required:
+      - operation # required for inheritance to work
+    properties:
+      operation:
+        type: string
+
+  downloadProfile:
+    allOf:
+      - $ref: '#/definitions/EUICCAsyncOperation'
+      - properties:
+          iccid:
+            type: string 
+          profileType:
+            type: string
+          enableProfile:
+            type: boolean
+  deleteProfile:
+    allOf:
+      - $ref: '#/definitions/EUICCAsyncOperation'
+      - properties:
+          iccid:
+            type: string
+  enableProfile:
+    allOf:
+      - $ref: '#/definitions/EUICCAsyncOperation'
+      - properties:
+          iccid:
+            type: string
+  disableProfile:
+    allOf:
+      - $ref: '#/definitions/EUICCAsyncOperation'
+      - properties:
+          iccid:
+            type: string
+            
+  ApplicationCommandParam:
+    properties:
+      name:
+        type: string
+      operation:
+        type: string
+      version:
+        type: string
+  ApplicationList:
+    properties:
+      name:
+        type: string
+      version:
+        type: string
+      status:
+        type: string
+      operation:
+        type: string
+      identifier:
+        type: string
+      managed:
+        type: boolean
+      applicationState:
+        type: string
+        enum:
+            - APPROVED
+            - EXPIRED
+            - MANAGED
+
+  ApplicationMeta:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          name:
+            type: string
+          version:
+            type: string
+          description:
+            type: string
+          manufacturer:
+            type: string
+          model:
+            type: string
+          URL:
+            type: string
+          state:
+            type: string
+            enum:
+              - APPROVED
+              - EXPIRED
+              - MANAGED
+          properties:
+            type: object
+            additionalProperties:
+              type: string
+  DeviceLog:
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Unique identifier
+      logEntries:
+        type: array
+        items:
+          $ref: '#/definitions/CommunicationLogEntry'
+  CommunicationLogEntry:
+    properties:
+      direction:
+        type: boolean
+      source:
+        type: boolean
+      inserted:
+        type: string
+      jobid:
+        type: integer
+        format: int64
+      command:
+        type: string
+  PushChannels:
+    properties:
+      name:
+        type: string
+        description: channel name
+      state:
+        type: string
+        description: state of the push transport channel
+      reason:
+        type: string
+        description: reason for a state
+  Client:
+    properties:
+      bootstrap:
+        $ref: '#/definitions/Bootstrap'
+      credentials:
+        $ref: '#/definitions/ProtocolCredentials'
+      bootstrapped:
+        type: boolean
+      version:
+        type: string
+        description: The name of the client
+      lastSeen:
+        type: string
+        readOnly: true
+        description: "Device's last seen time by CDP, formatted in 'yyyy-MM-dd HH:mm:ss' format."
+      announcedMake:
+        type: string
+        readOnly: true
+        description: Make announced by this protocol. Can be used during device classification
+      announcedModel:
+        type: string
+        readOnly: true
+        description: Model announced by this protocol. Can be used during device classification
+      pushChannels:
+        type: array
+        items:
+          $ref: '#/definitions/PushChannels'
+  Bootstrap:
+    properties:
+      type:
+        description: >
+          If the protocol requires bootstrap, this setting controls how CDP will
+          bootstrap it. Not all bootstrap types are supported by all protocols.
+
+          - SI: Server Initiated: Server will generate credentials and send them
+          to the device
+
+          - FBU: Factory bootstrap with unique credentials: Server must be
+          configured with unique credentials
+
+          - FBD: Factory bootstrap with default credentials: Server will use
+          default credentials (configured at device type) the first time, and
+          change them with unique (generated) ones during first contact
+        type: string
+        enum:
+          - FBU
+          - FBD
+          - SI
+      state:
+        type: string
+        description: This field tells the bootstrap status of the device
+        enum:
+          - NOT_BOOTSTRAPPED
+          - BOOTSTRAPPED
+          - BOOTSTRAPPING
+        readOnly: true
+      error:
+        type: string
+        description: 'If the last bootstrap attempt failed, this field contains the details of the error'
+        readOnly: true
+  ProtocolCredentials:
+    properties:
+      serverPassword:
+        type: string
+      clientUsername:
+        type: string
+      clientPassword:
+        type: string
+  CustomAttributes:
+    properties:
+      attribute1:
+        type: string
+      attribute2:
+        type: integer
+        format: int64
+      attribute3:
+        type: string
+      attribute4:
+        type: integer
+        format: int64
+      attribute5:
+        type: string
+      attribute6:
+        type: integer
+        format: int64
+  Tenant:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          name:
+            type: string
+          description:
+            type: string
+          imsiRanges:
+            type: array
+            description: list of IMSI ranges that belong to this tenant. Auto-created devices that announce IMSI will be automatically assigned to this tenant if their IMSI starts with one of the the configured ranges.
+            items:
+              type: string
+  User:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          userName:
+            type: string
+          password:
+            type: string
+          tenant:
+            $ref: '#/definitions/Tenant'
+          enabled:
+            type: boolean
+          role:
+            type: integer
+            format: int64
+          roleName:
+            type: string
+  Role:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          name:
+            type: string
+          defaultRole:        
+            type: boolean
+          permissions:
+            type: array
+            items:
+              type: string
+  DevicesChart:
+    properties:
+      months:
+        type: array
+        items:
+          type: string
+      devicesCount:
+        type: array
+        items:
+          type: integer
+          format: int64
+          
+  DeviceProperty:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          autoCreate:
+            type: string
+          autoBootstrap:
+            type: string
+          clientName:
+            type: string
+          clientNonce:
+            type: string
+          clientPassword:
+            type: string
+          manufacturer:
+            type: string
+          model:
+            type: string
+          serverName:
+            type: string
+          serverNonce:
+            type: string
+          serverPassword:
+            type: string
+          cga:
+            type: string
+          bootstrapSecret:
+            type: string   
+  DevicePropertyList:
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+  ProtocolDeviceTypeMeta:
+    properties:
+      name:
+        type: string
+      factoryBootstrapSupported:
+        type: boolean
+      siBootstrapSupported:
+        type: boolean
+      credentialsSupported:
+        type: boolean
+      bootstrapRequired:
+        type: boolean
+      alwaysInitiateConnection:
+        type: boolean
+      connectionRequestTypes:  
+        type: array
+        items:
+          type: string
+
+  JobResultsByStatus:
+    properties:
+      name:
+        type: string
+        description: job status.
+      data:
+        type: array
+        items:
+          type: integer
+          format: int64
+
+  JobsChart:
+    properties:
+      months:
+        type: array
+        items:
+          type: string
+      jobResultsByStatus:
+        type: array
+        items:
+          $ref: '#/definitions/JobResultsByStatus'
+
+  Dashboard:
+     properties:
+       devicecount:
+          type: integer
+          format: int64
+          readOnly: true
+          description: Number of  devices in the system. Superadmin has count for all devices. Tenant user has count only for it's own devices
+       tenantcount:
+          type: integer
+          format: int64
+          readOnly: true
+          description: Number of tenants in the system
+       usercount:
+          type: integer
+          format: int64
+          readOnly: true
+          description: Number of users in the system
+       deviceschart:
+          $ref: '#/definitions/DevicesChart'
+       jobschart:
+          $ref: '#/definitions/JobsChart'
+
+  Me:
+    properties:
+      name:
+        type: string
+      tenant:
+        type: integer
+        format: int64
+      licenseValid:
+        type: boolean
+      roles:
+        type: array
+        items:
+          type: string
+  FirmwareList:
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Unique identifier
+      name:
+        type: string
+      manufacturer:
+        type: string
+      model:
+        type: string
+      prerequisite:
+        type: string
+      version:
+        type: string
+      firmwareState:
+            description: state of the firmware Image
+            type: string
+            enum:
+              - RECEIVED
+              - UNDER_TEST
+              - VERIFIED
+              - APPROVED
+              - INACTIVE
+              - REJECTED
+              - EXPIRED             
+              - UNDER_TEST_SG
+      firmwareSeverity:
+            description: severity level
+            type: string
+            enum:
+              - NO_SEVERITY
+              - MANDATORY
+              - OPTIONAL
+  Firmware:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          name:
+            type: string
+          version:
+            type: string
+          imagefileurl:
+            type: string 
+          manufacturer:
+            type: string
+          model:
+            type: string
+          username:
+            description: username  to access the firmware image
+            type: string 
+          password:
+            description: password  to access the firmware image
+            type: string  
+          hostname:
+            description: host from where firmware was uploaded 
+            type: string  
+          severity:
+            description: severity level
+            type: string
+            enum:
+              - NO_SEVERITY
+              - MANDATORY
+              - OPTIONAL
+          prerequisite:
+            type: string
+          properties:
+            type: array
+            items:
+                  $ref: '#/definitions/FirmwareProperties'
+          state:
+            description: state of the firmware Image
+            type: string
+            enum:
+              - RECEIVED
+              - UNDER_TEST
+              - VERIFIED
+              - APPROVED
+              - INACTIVE
+              - REJECTED
+              - EXPIRED
+              - UNDER_TEST_SG
+              
+  FirmwareProperties:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          key:
+            type: string
+          value:
+            type: string
+                
+  Job:  
+    allOf:
+      - $ref: '#/definitions/PersistentObject'   
+      - properties:
+          name:
+            type: string            
+            description: unique job name
+          originator:
+           type: string            
+           description: principle who initiated the job
+          priority:
+           type: integer           
+           description: priority of the job
+          askUser:
+           type: boolean           
+           description:  confirmation message i.e pop to confirm  from the user
+          alertMessage:
+           type: string            
+           description: Message to be displayed as part of alert
+          retryCount:
+           type: integer            
+           description:  Number of retry count
+          targetedClient:
+            $ref: '#/definitions/Client'
+          version:
+           type: integer
+          expirationTimeOutSeconds:
+           type: integer            
+           description:  Operation time out
+          executionTimeOutSeconds:
+           type: integer           
+           description:  operation time out  after the device connects back
+          updateInventory:
+           type: boolean           
+           description:  update device inventory details
+          storeDJRParameters:
+           type: boolean             
+           description:  store result after the operation
+          primitiveRequest:
+           $ref: '#/definitions/PrimitiveRequest'
+           description:  primitive request details
+          action:
+             $ref: '#/definitions/Action' 
+          description:
+            type: string
+            description:   description about the job
+          nbiCorrelator:
+            type: string
+          uiMode:
+            type: string
+          protocolPreference:
+            type: string
+          sourceAddress:
+            type: string
+          delaySeconds:
+            type: integer
+          needNotification:
+            type: boolean
+          enabledNbiNotification:
+            type: boolean   
+
+  PolicyDetail:
+    properties:
+      policyName:
+        type: string
+      actionName:
+        type: string
+      primitive:
+        type: string
+      originator:
+        type: string
+      lastEnableDisableTime:
+        type: integer
+        format: int64
+      enable:
+        type: boolean
+      jobCorrelatorId:
+        type: string
+      id:
+        type: integer
+        format: int64
+                              
+  Schedule:
+    properties:
+      advanced:
+        type: boolean
+      startTime:
+        type: integer
+        format: int64
+      endTime:
+        type: integer
+        format: int64
+      cronSchedule:
+        $ref: '#/definitions/Cron'
+      content:
+        type: string
+        description:   description about the schedule
+      status:
+        type: string
+  
+  ManagementJobSettings:
+    allOf:
+      - $ref: '#/definitions/Job'
+      - properties:
+         jobExitTags:
+          type: array
+          items:
+           $ref: '#/definitions/ExitTag'
+         jobExitEvents:
+          type: array
+          items:
+           $ref: '#/definitions/ExitEvent'
+         criteriaParameter:
+            $ref: '#/definitions/CriteriaParamArray'
+         enable:
+          type: boolean
+         jobStatus:
+           type: string
+         criteriaTemplateId:
+            type: integer
+            format: int64      
+  BulkWindowLog:
+    properties:
+      startTime:
+        type: integer
+        format: int64
+      endTime:
+        type: integer
+        format: int64
+      targetedDevices:
+        type: integer
+        format: int64
+      windowLag:
+        type: integer
+        format: int64
+
+  PolicySettings:
+    allOf:
+      - $ref: '#/definitions/ManagementJobSettings'
+      - properties:
+          executionMode:
+            $ref: '#/definitions/ExecutionMode'
+          jobEvents:
+            type: array
+            items:
+              $ref: '#/definitions/JobEvent'
+          bulkWindowLog:
+            type: array
+            items:
+              $ref: '#/definitions/BulkWindowLog'
+                           
+  CampaignSettings: 
+    allOf:
+      - $ref: '#/definitions/ManagementJobSettings'
+      - properties:
+          maxTargetedDevices:
+            type: integer
+            format: int64
+            description: Max targeted devices allowed in a bulk job event.
+          rank:
+            type: integer
+            description: Rank / Priority of the job.
+          failureThreshold:
+            type: integer
+          enqueuingRate:
+            type: integer
+          excludeSuccessfulDevices:
+            type: boolean
+          bulkJobRuntime:
+            $ref: '#/definitions/BulkJobRuntime'
+          schedule:
+            $ref: '#/definitions/Schedule'
+          bulkWindowLog:
+            type: array
+            items:
+              $ref: '#/definitions/BulkWindowLog'
+              
+  BulkJobRuntime:
+    properties:
+      windowStatus:
+        type: string
+      windowTargetedDeviceCount:
+        type: integer
+        format: int64
+      nextTransitionJobStatus:
+        type: string
+      nextTransitionTime:
+        type: string
+      lastSeenMessage:
+        type: string
+      lastEnableDisableTime:
+        type: integer
+        format: int64
+      lastTargetedDevice:
+        type: integer
+        format: int64
+      runTargetedDeviceCount:
+        type: integer
+        format: int64
+      cacheUpdated:
+        type: string
+      cacheSize:
+        type: integer
+        format: int64
+      lagTimeMillis:
+        type: integer
+        format: int64
+      windowFailureCount:
+        type: integer
+
+  WindowLogs :
+    properties:
+      id:
+        type: integer
+        format: int64
+      window:
+        type: string
+  ExitTag:
+    properties:
+      exitTagName:
+        type: string
+      exitTagValue:
+        type: string
+      filterSubStatus:
+        type: string  
+      exitTagType:
+        type: string
+        enum:
+          - SUCCESS
+          - NO_RESPONSE
+          - FAILURE
+  ScheduleItem:
+    properties:
+      content:
+        type: string
+      start:
+        type: integer
+        format: int64
+      end:
+        type: integer
+        format: int64
+      targetedDevices:
+        type: integer
+        format: int64
+      maxTargetedDevices:
+        type: integer
+        format: int64
+  CampaignSchedule:
+    properties:
+      id:
+        type: string
+      content:
+        type: string
+      jobStatus:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ScheduleItem'
+  ExitEvent:
+    properties:
+      exitEventName:
+        type: string
+      subStatus:
+        type: string
+      notify:
+        type: string
+      exitEventType:
+        type: string
+        enum:
+          - SUCCESS
+          - NO_RESPONSE
+          - FAILURE        
+          
+  ExecutionMode:
+    properties:
+      mode:
+        type: string
+        enum:
+          - REAL_TIME
+          - BEST_EFFORT
+  
+  JobEvent:
+    type: object
+    discriminator: eventType
+   
+  AlertJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          alertType:
+            type: string
+          alertData:
+            type: string
+          
+  BootstrapedJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          nativeclient:
+            type: boolean
+  
+  CustomJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          name:
+            type: string
+       
+  HeartBeatJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          name:
+            type: string
+        
+  ServiceChangeJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          serviceTagName:
+            type: string
+          serviceTagValue:
+            type: string
+       
+  SMSJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          message:
+            type: string
+  
+  ValueChangeJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          expression:
+            type: string
+        
+  HssNotificationJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          name:
+            type: string
+       
+  InUseJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          name:
+            type: string
+    
+  RegisteredJobEvent:
+    allOf:
+      - $ref: '#/definitions/JobEvent'
+      - properties:
+          name:
+            type: string
+                                  
+  PrimitiveRequest:
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+    required:
+      - name
+
+  PrimitiveMetaData:
+    properties:
+      label:
+        type: string
+      type:
+        type: string
+        description: 'type of the data. One of [string,int,boolean,object,array]. Some properties are only applicable for certain types'
+      default:
+        type: string
+        description: 'applicable for simple types: default value'
+      items:
+        $ref: '#/definitions/PrimitiveMetaData'
+        description: 'required for array types: Type of the items'
+      maxItems:
+        type: integer
+        description: 'applicable for array types: Maximum amount of items'
+      enum:
+        type: array
+        description: 'applicable for simple types: list of allowed values'
+        items:
+          type: string
+      required:
+        type: boolean
+      properties:
+          type: object
+          description: 'required for object types'
+          additionalProperties:
+            $ref: '#/definitions/PrimitiveMetaData'
+      oneOf:
+          type: array
+          description: 'if specified, one the child types will be used. Mutualy exclusive with type property'
+          items:
+            $ref: '#/definitions/PrimitiveMetaData'
+
+  Action:
+    allOf:
+      - $ref: '#/definitions/PersistentObject'
+      - properties:
+          name:
+            type: string
+          description:
+            type: string
+          primitiveRequest:
+            $ref: '#/definitions/PrimitiveRequest'
+          inUse:
+            type: boolean
+          unResolvedDynamicVariable:
+            type: array
+            items:
+              $ref: '#/definitions/JobParam'
+    required:
+      - name
+      - primitiveRequest
+
+  SingleDeviceJob:
+    allOf:
+      - $ref: '#/definitions/Job'
+      - properties:
+          primitiveRequest:
+            $ref: '#/definitions/PrimitiveRequest'
+          actionId:
+            type: integer
+            format: int64
+          jobParam:
+            type: array
+            items:
+              $ref: '#/definitions/JobParam'
+
+  JobParam:
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+    required:
+      - name
+  Cron:
+    properties:
+      enableCronExpression:
+        type: string
+      suspendCronExpression:
+        type: string
+      executeImmediate:
+        type: boolean
+  Paged:
+    properties:
+      iTotalRecords:
+        type: integer
+        format: int64
+      iTotalDisplayRecords:
+        type: integer
+        format: int64
+
+  DeviceBrand:
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+
+  DeviceModel:
+    properties:
+      name:
+        type: string
+  Error:
+    properties:
+      code:
+        type: string
+      localizedMessage:
+        type: string
+  Script:
+    properties:
+      name:
+        type: string
+      content:
+        type: string
+      schema:
+        type: string
+
+  CampaignStatisticListItem:
+    properties:
+      id:
+        type: string
+      jobCorrelatorId:
+        type: string
+      content:
+        type: string
+      jobStatus:
+        type: string
+
+  CampaignStatistics:
+    properties:
+      id:
+        type: string
+      jobCorrelatorId:
+        type: string
+      content:
+        type: string
+      jobStatus:
+        type: string
+      criteriaTemplateName:
+        type: string
+      actionName:
+        type: string
+      actionPrimitiveName:
+        type: string
+      schedule:
+         $ref: '#/definitions/Schedule'
+      jobStats:
+        type: array
+        items:
+          $ref: '#/definitions/JobStats'                       
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/Schedule' 
+
+  ShortDeviceInfo:
+    properties:
+      deviceId:
+        type: string
+      manufacturer:
+        type: string
+      model:
+        type: string
+      inUse:
+        type: boolean
+      managed:
+        type: boolean
+      networkId:
+        type: string
+      subscriberId:
+        type: string
+      customerId:
+        type: string
+        
+  eUICCDownloadParams:
+     properties:
+            eid:
+              type: string
+              description: Registered e-UICC Id
+            smsrId:
+              type: string
+              description: Identification of the SM-SR currently in charge of eUICC management.
+            profileType:
+              type: string
+              description: Identification of the Profile type to download and install in the eUICC.
+            enableProfile:
+              type: boolean
+              description: Indicates if the Profile shall be enabled after downloading and installation.
+            iccid:
+              type: string
+              description: Unique number to identify a Profile in an eUICC
+
+  JobStats:  
+    properties:    
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Data'   
+       
+  Data:        
+    properties:
+      name:
+        type: string
+      y:
+        type: integer
+  
+  HostDevice:
+    properties:
+      manufacturer:
+       type: string
+      model:
+       type: string
+      softwareVersion:
+       type: string
+      firmwareVersion:
+       type: string
+      hardwareVersion:
+       type: string
+      date:
+       type: string
+      hostDeviceId:
+       type: string      
+     
+ 
+  ChainedJobViewModel:
+    properties:
+      root:
+        $ref: '#/definitions/CanonicalJobNode'
+                  
+  CanonicalJobNode:
+    properties:
+      jobId:
+        type: integer
+        format: int64
+        readOnly: true
+        description: Unique identifier
+      jobName:
+        type: string
+      jobStatus:
+        type: string
+      jobType:
+        type: string
+      jobCorrelatorId:
+        type: string
+      serviceTagName:
+        type: string
+      serviceTagValue:
+        type: string
+      customEventName:
+        type: string
+      exitTags:
+        $ref: '#/definitions/JobNodeExitType'
+      exitEvents:
+        $ref: '#/definitions/JobNodeExitType'
+
+  JobNodeExitType:
+    properties:
+     success:
+        type: array
+        items:
+          $ref: '#/definitions/CanonicalJobNode'
+     failure:
+        type: array
+        items:
+          $ref: '#/definitions/CanonicalJobNode'
+     noresponse:
+        type: array
+        items:
+          $ref: '#/definitions/CanonicalJobNode'
+
+   
+  ScriptDetailExample:
+    properties:
+      name:
+        description: content
+        type: string
+      content:
+        type: string
+      schema:
+        type: string
+      defaultContent:
+        type: string
+      defaultSchema:
+        type: string
+      defaultNativePrimitive:
+        type: string
+    required:
+      - name
+      - schema
+parameters:
+  objectid:
+    name: id
+    in: path
+    description: "An object's unique id in the system"
+    required: true
+    type: integer
+    format: int64
+  keyParam:
+    name: key
+    in: path
+    description: SCE key
+    required: true
+    type: string
+  iDisplayLength:
+    name: iDisplayLength
+    in: query
+    description: 'Amount of records to return. If not provided, server decides. Possible option -1 to fetch ALL records'
+    type: integer
+    required: false
+    format: int32
+  iDisplayStart:
+    name: iDisplayStart
+    in: query
+    description: 'Start index for paging. If not provided, page will start at beginning of the list (index 0)'
+    type: integer
+    required: false
+    format: int32a
+  includeJobDetails:
+    name: includeJobDetails
+    in: query
+    description: 'Include Device Job Result request/response data into the job history list'
+    type: boolean
+    required: false
+  name:
+    name: name
+    in: path
+    required: true
+    type: string
+  eid:
+    name: eid
+    in: path
+    description: "eUICC id, represented as 32 digits"
+    required: true
+    type: string

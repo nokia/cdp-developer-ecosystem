@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: root
+Build-Jdk: 1.8.0_45
+Build-Key: 
+Build-Number: 
+Build-Timestamp: 201701081856
+OS-Arch: amd64
+OS-Name: Linux
+OS-Version: 2.6.32-642.6.1.el6.x86_64
+Product-Maven-Version: 7.0.0-SNAPSHOT
+Product-Name: MDM
+SCM-Location: scm:svn:https://svn.motive.com/repos/mdm/trunk/rest
+SCM-Version: 
+Site-URL: file:///tmp/dropzone/Mobile_Solutions/MDM/7.0.0-SNAPSHOT/mav
+ en-site
+
