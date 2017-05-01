@@ -8,6 +8,7 @@ are set out below. This Third Party Code is licensed to you under their original
 Nokia Corporation reserves all other rights not expressly granted, whether by implication, estoppel or otherwise.
 
     Wakaama-mbed, obtained from https://github.com/jvermillard/Wakaama-mbed
+
 /*
 Copyright (c) 2007, Eclipse Foundation, Inc. and its licensors.
 
