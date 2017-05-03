@@ -1,6 +1,8 @@
 // Imports
 var request = require('request');
 
+
+// Create the device object
 var device = {
     deviceId: 'Your First LWM2M Device!',
     model: 'LWM2M Generic Device',
@@ -8,11 +10,12 @@ var device = {
     inUse: true
 }
 
+// Configure options for the HTTP POST method
 var options = {
-    url: 'http://cdpfest.nokialabs.com/rest/device',
+    url: 'http://your.cdp.server/rest/device',
     auth: {
-        user: 'oliver',
-        pass: 'changem3'
+        user: 'username',
+        pass: 'password'
     },
     headers: {
         'Content-Type': 'application/json'
