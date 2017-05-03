@@ -1,6 +1,6 @@
-# Example Code
+# Example Code - Java
 
-### Importing Java Project (Eclipse)
+### Setting up Environment
 
 1. Open Eclipse, then click 'File'>'Import...'. 
 
