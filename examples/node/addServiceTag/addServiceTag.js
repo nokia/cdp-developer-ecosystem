@@ -16,10 +16,10 @@ var serviceTag = {
 
 // Configure HTTP POST method
 var options = {
-    url: 'http://cdpfest.nokialabs.com/rest/device/' + id + '/servicetag',
+    url: 'http://your.cdp.server/rest/device/' + id + '/servicetag',
     auth: {
-        user: 'oliver',
-        pass: 'changem3'
+        user: 'username',
+        pass: 'password'
     },
     headers: {
         'Content-Type': 'application/json'
