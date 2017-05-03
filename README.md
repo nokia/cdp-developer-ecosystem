@@ -15,6 +15,5 @@ and as such can be ported to many *nix environments
 
 #### NBI API Demos
 
-This section includes some sample code (Java) that demonstrates how to interact with CDP's REST APIs to modify devices and execute jobs.
-
+This section includes some sample code in Java and Node.js that demonstrates how to interact with CDP's REST APIs to modify devices and execute jobs.
 
