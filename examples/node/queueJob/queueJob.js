@@ -11,10 +11,10 @@ var job = {
 }
 // Configure POST
 var options = {
-    url: 'http://cdpfest.nokialabs.com/rest/device/' + deviceId + '/job',
+    url: 'http://your.cdp.server/rest/device/' + deviceId + '/job',
     auth: {
-        user: 'oliver',
-        pass: 'changem3'
+        user: 'username',
+        pass: 'password'
     },
     headers: {
         'Content-Type': 'application/json'
