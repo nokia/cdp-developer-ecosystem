@@ -6,10 +6,10 @@ var deviceId = '72';
 
 // Configure request
 var options = {
-    url: 'http://cdpfest.nokialabs.com/rest/device/' + deviceId + '/job/history?iDisplayLength=38',
+    url: 'http://your.cdp.server/rest/device/' + deviceId + '/job/history',
     auth: {
-        user: 'oliver',
-        pass: 'changem3'
+        user: 'username',
+        pass: 'password'
     }
 };
 
