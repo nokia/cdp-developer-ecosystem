@@ -1,0 +1,49 @@
+// Import packages
+var request = require('request');
+
+// Specify device
+var deviceId = '72';
+
+// Configure request
+var options = {
+    url: 'http://cdpfest.nokialabs.com/rest/device/' + deviceId + '/job/history?iDisplayLength=38',
+    auth: {
+        user: 'oliver',
+        pass: 'changem3'
+    }
+};
+
+// Execute the HTTP GET request 
+request.get(options, function(error, response, body) {
+    if((error === null) && response && response.statusCode) {
+        if(response.statusCode === 200) {
+            // Success
+            console.log('Successfully retrieved Job data');
+            console.log('');
+            var jobArray = JSON.parse(body).aaData;
+            for(var i = 0; i < jobArray.length; i++) {
+                printJob(jobArray[i]);
+            }
+        } else if (response.statusCode === 404) {
+            // Resource not found
+            console.log('Job/Device not found');
+        } else {
+            // Malformed request
+            console.log('Bad Request');
+        }
+    } else if (error) {
+        // Catch error
+        console.log('Error:', error);
+    }
+});
+
+
+// Helper function to print values from the response
+var printJob = function(job) {
+    console.log('');
+    console.log('JOB NAME:', job.actionName);
+    console.log('Correlator ID:', job.nbiCorrelator);
+    var date = new Date(job.startTime);
+    console.log('Time:', date.toUTCString());
+    console.log('');
+}
