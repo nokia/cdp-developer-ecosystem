@@ -34,7 +34,7 @@ This readme will go over how to interact with CDP, starting with adding a device
 
     You will need this numeric ID to use the action in a Job through the REST API.
 
-6. Adding a Job. Open the 'queueJob' example, and set the job equal to the following
+6. Submitting a Job. Open the 'queueJob' example, and set the job equal to the following
 
     ~~~~
     var job = {
