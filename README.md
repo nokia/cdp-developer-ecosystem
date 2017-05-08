@@ -2,6 +2,14 @@
 
 ## Table of Contents
 
+#### Accessing CDP Console
+
+To access the CDP console, navigate to the following link with respect to your instance of CDP.
+
+~~~~
+http://<host>:<port>/ui
+~~~~
+
 #### Device Onboarding
 
 This section includes documentation, videos, and client code with information to onboard a device with CDP. We have documented the process for the following devices:
