@@ -28,10 +28,10 @@ var device = {
 // Configure options for the HTTP POST method
 var options = {
     // Change to your own URL and credentials
-    url: 'http://cdpfest.nokialabs.com/rest/device', 
+    url: 'http://your.cdp.server/rest/device', 
     auth: { 
-        user: 'oliver',
-        pass: 'changem3'
+        user: 'username',
+        pass: 'password'
     },
     headers: {
         'Content-Type': 'application/json'
