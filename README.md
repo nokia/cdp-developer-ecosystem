@@ -10,6 +10,10 @@ To access the CDP console, navigate to the following link with respect to your i
 http://<host>:<port>/ui
 ~~~~
 
+#### Accessing the REST Documentation (Swagger Docs)
+
+You can access the REST documentation from your CDP Server Instance or from your local machine. Navigate to [this](https://github.com/nokia/cdp-developer-ecosystem/tree/master/docs/rest) section to learn more.
+
 #### Device Onboarding
 
 This section includes documentation, videos, and client code with information to onboard a device with CDP. We have documented the process for the following devices:
