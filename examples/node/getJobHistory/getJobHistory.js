@@ -1,7 +1,20 @@
+/* Nokia Connected Device Platform NBI API Demos (Node.js)
+ * 
+ * GET: /rest/device/job
+ * 
+ * Description: This URI will allow you get the list of jobs posted to a device
+ * 
+ * 200 - OK - Returned job array
+ * 500 - Internal Server Error - Malformed JSON payload
+ * 
+ * @author Oliver Upton
+ * 
+ */
+
 // Import packages
 var request = require('request');
 
-// Specify device
+// Device ID from the 'getDevices' example
 var deviceId = '72';
 
 // Configure request

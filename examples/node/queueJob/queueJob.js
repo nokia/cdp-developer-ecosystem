@@ -1,9 +1,23 @@
+/* Nokia Connected Device Platform NBI API Demos (Node.js)
+ * 
+ * POST: /rest/device/{deviceId}/job
+ * 
+ * Description: This URI will allow you to queue a job to the device specified
+ * 
+ * 201 - OK/Created - Successfully queued job
+ * 500 - Internal Server Error - Malformed JSON payload
+ * 
+ * @author Oliver Upton
+ * 
+ */
+
 // Import packages
 var request = require('request');
 
-// Specify device
+// Device ID found in the 'getDevices' example
 var deviceId = '72';
 
+// Action ID found in the 'getActions' example
 var job = {
     actionId: '65',
     needNotification: true,
@@ -24,6 +38,7 @@ var options = {
 
 // Execute the HTTP GET request 
 request.post(options, function(error, response, body) {
+    console.log('Body:', body);
     if((error === null) && response && response.statusCode) {
         if(response.statusCode === 201) {
             // Success

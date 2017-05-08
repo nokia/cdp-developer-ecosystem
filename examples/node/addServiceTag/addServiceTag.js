@@ -1,8 +1,21 @@
+/* Nokia Connected Device Platform NBI API Demos (Node.js)
+ * 
+ * POST: /rest/device/{deviceId}/servicetag
+ * 
+ * Description: This URI will allow you to create a new service tag attached to the
+ * specified device
+ * 
+ * 201 - OK/Created - Successfully added the service tag
+ * 500 - Internal Server Error - Malformed JSON payload
+ * 
+ * @author Oliver Upton
+ * 
+ */
 
 // Import packages
 var request = require('request');
 
-// ID of device to be modified
+// Device ID obtained from the 'getDevices' example
 var id = '72';
 
 // Configure ServiceTag

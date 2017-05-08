@@ -1,9 +1,22 @@
+/* Nokia Connected Device Platform NBI API Demos (Node.js)
+ * 
+ * GET: /rest/device/{deviceId}/job/{jobId}
+ * 
+ * Description: This URI will allow you read the status and details of a job
+ * 
+ * 200 - OK - Job data returned
+ * 500 - Internal Server Error - Malformed JSON payload
+ * 
+ * @author Oliver Upton
+ * 
+ */
+
 // Import packages
 var request = require('request');
 
-// Specify job and device
+// Specify job and device. Device ID was found in the 'getDevices' example, and Job ID was found in the 'getJobHistory' example
 var deviceId = '72';
-var jobId = 'MDM_41300';
+var jobId = 'MDM_41690';
 
 // Configure request
 var options = {

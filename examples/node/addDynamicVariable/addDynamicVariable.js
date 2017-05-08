@@ -1,7 +1,21 @@
+/* Nokia Connected Device Platform NBI API Demos (Node.js)
+ * 
+ * POST: /rest/device/{deviceId}/dynamicvariable
+ * 
+ * Description: This URI will allow you to add a dynamic variable to the device
+ * specified by the deviceID
+ * 
+ * 201 - OK/Created - Successfully added the dynamic variable
+ * 500 - Internal Server Error - Malformed JSON payload
+ * 
+ * @author Oliver Upton
+ * 
+ */
+
 // Import packages
 var request = require('request');
 
-// Device ID
+// Device ID, obtained from running the 'getDevices' example
 var id = '72';
 
 // Configure the dynamic variable

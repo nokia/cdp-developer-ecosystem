@@ -1,3 +1,16 @@
+/* Nokia Connected Device Platform NBI API Demos (Node.js)
+ * 
+ * GET: /rest/device
+ * 
+ * Description: This URI will return a list of devices currently in CDP.
+ * 
+ * 200 - OK - Returned array of devices
+ * 500 - Internal Server Error - Malformed JSON payload
+ * 
+ * @author Oliver Upton
+ * 
+ */
+
 // Import packages
 var request = require('request');
 

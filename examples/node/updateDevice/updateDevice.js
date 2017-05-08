@@ -1,7 +1,21 @@
+/* Nokia Connected Device Platform NBI API Demos (Node.js)
+ * 
+ * PUT: /rest/device/{deviceId}
+ * 
+ * Description: This URI will allow you to create update a device in the CDP console. The API returns 
+ * no response body, and the status codes correspond to the following values:
+ * 
+ * 204 - OK/Updated - Successfully updated the specified device
+ * 500 - Internal Server Error - Malformed JSON payload
+ * 
+ * @author Oliver Upton
+ * 
+ */
+
 // Import packages
 var request = require('request');
 
-// Specify device
+// Device ID found in the 'getDevices' example
 var deviceId = '72';
 
 // Configure the Device update
