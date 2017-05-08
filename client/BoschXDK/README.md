@@ -6,7 +6,7 @@
 
 ### Procedure
 1. Log in to the CDP console and select "Devices", then click "Add Device".
-2. For the device ID, provide a unique name for your device Ex. "BoschXDK". Keep track of this value as it will be useful in later steps.
+2. For the device ID, provide a unique name for your device Ex. "BoschXDK". Keep track of this value as it will be useful in later steps. Set the Manufacturer to 'Generic' and the Model to 'LWM2M Generic Device'.
 3. Open XDK Workbench, and at the welcome screen click "Lwm2mSensorClient". 
 4. Plug in your Bosch device. Once the project opens, click "Flash" in the upper left corner.
 5. Open the provided txt file from this repo in a Text Editor.
