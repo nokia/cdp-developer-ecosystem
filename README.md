@@ -1,8 +1,9 @@
-# CDP Developer Ecosystem GitHub
-
 <p align="center">
   <img  src="https://raw.githubusercontent.com/nokia/cdp-developer-ecosystem/master/resources/NOKIA_LOGO_BLUE%5B249%5D.JPG">
 </p>
+
+
+# CDP Developer Ecosystem GitHub
 
 ## Table of Contents
 
