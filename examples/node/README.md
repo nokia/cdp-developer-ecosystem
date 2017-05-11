@@ -4,12 +4,12 @@
 
 - To execute these files, you must already have Node.js installed on your machine. If you do not, please go [here](https://nodejs.org/en/) to install.
 
-- The only necessary package to execute these files is 'request'. To install in a global scope, please run the following command
+- The only necessary package to execute these files is 'request'. From the command line, open the directory for the example you want to execute and run the following command.
 ~~~~
-npm install -g request
+npm install request
 ~~~~
 
-- Finally, navigate to the source directory that you would like to execute and run by simply typing:
+- Finally, you can execute the example with the following command:
 ~~~~
 node <DESIRED-FILE>.js
 ~~~~
