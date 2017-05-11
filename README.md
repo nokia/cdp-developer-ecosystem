@@ -5,8 +5,6 @@
 
 # CDP Developer Ecosystem GitHub
 
-## Table of Contents
-
 ### Accessing CDP Console
 
 To access the CDP console, navigate to the following link with respect to your instance of CDP.
