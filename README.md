@@ -1,8 +1,12 @@
 # CDP Developer Ecosystem GitHub
 
+<p align="center">
+  <img  src="https://raw.githubusercontent.com/nokia/cdp-developer-ecosystem/master/resources/NOKIA_LOGO_BLUE%5B249%5D.JPG">
+</p>
+
 ## Table of Contents
 
-#### Accessing CDP Console
+### Accessing CDP Console
 
 To access the CDP console, navigate to the following link with respect to your instance of CDP.
 
@@ -10,11 +14,11 @@ To access the CDP console, navigate to the following link with respect to your i
 http://<host>:<port>/ui
 ~~~~
 
-#### Accessing the REST Documentation (Swagger Docs)
+### Accessing the REST Documentation (Swagger Docs)
 
 You can access the REST documentation from your CDP Server Instance or from your local machine. Navigate to [this](https://github.com/nokia/cdp-developer-ecosystem/tree/master/docs/rest) section to learn more.
 
-#### Device Onboarding
+### Device Onboarding
 
 This section includes documentation, videos, and client code with information to onboard a device with CDP. We have documented the process for the following devices:
 - [Raspberry Pi, Eclipse Leshan Client (Java)](https://github.com/nokia/cdp-developer-ecosystem/tree/master/client/RaspberryPi)
