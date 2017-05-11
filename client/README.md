@@ -4,10 +4,10 @@
 
 To help you get started, we have provided Starter Kit Guides for the following devices:
 
-    - Raspberry Pi
-    - Bosch XDK 110
-    - NXP FRDM-K64F
-    - NXP LPC1768
+- Raspberry Pi
+- Bosch XDK 110
+- NXP FRDM-K64F
+- NXP LPC1768
 
 To onboard one of these devices, navigate to the respective subfolder for the device and follow the included guide.
 
