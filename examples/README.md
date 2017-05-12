@@ -38,7 +38,7 @@ This readme will go over how to interact with CDP, starting with adding a device
 
     ~~~~
     var job = {
-        actionId: <YOUR_NUMERIC_ACTION_ID>
+        actionId: <YOUR_NUMERIC_ACTION_ID>,
         needNotification: true,
         enabledNbiNotification: true
     }
@@ -66,7 +66,7 @@ This readme will go over how to interact with CDP, starting with adding a device
 
     ~~~~
     var jobId = <CORRELATOR_ID>;
-    var deviceId = <NUMERIC_DEVICE_ID>
+    var deviceId = <NUMERIC_DEVICE_ID>;
     ~~~~
 
     After editing these values, you may then execute the example to read the data from your posted job.
