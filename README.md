@@ -3,7 +3,7 @@
 </p>
 
 
-# CDP Developer Ecosystem GitHub
+# CDP Developer Ecosystem Starter Kit
 
 ### Accessing CDP Console
 
