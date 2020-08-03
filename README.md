@@ -34,3 +34,8 @@ This section includes some sample code in Java and Node.js that demonstrates how
 
 - [Java Examples](https://github.com/nokia/cdp-developer-ecosystem/tree/master/examples/java)
 - [Node.js Examples](https://github.com/nokia/cdp-developer-ecosystem/tree/master/examples/node)
+
+
+## License
+
+This project is licensed under the Apache-2.0 license - see the [LICENSE](https://github.com/nokia/cdp-developer-ecosystem/blob/master/LICENSE).
